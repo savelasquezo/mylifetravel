@@ -1,0 +1,160 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="{% static '/app/ico/favicon.ico' %}" type="image/x-icon">
+  <link rel="shortcut icon" href="{% static '/app/ico/favicon.ico' %}" type="image/x-icon">
+  <title>{% block title %}{{Setting.sName}}{% endblock %}</title>
+  <link rel="stylesheet" type="text/css" href="{% static '/app/css/styles.css' %}" media="all">
+  <link rel="stylesheet" type="text/css" href="{% static '/app/css/framework.css' %}" media="all">
+  <link rel="stylesheet" type="text/css" href="{% static '/assets/fontawesome/css/fontawesome-all.min.css' %}" media="all">
+</head>
+<body>
+{% block block %}
+<!-- Top Background Image Wrapper -->
+<div class="bgded overlay">
+    <div class="wrapper row0">
+        <div id="topbar" class="hoc clear">
+            <div class="fl_left">
+                <ul class="nospace">
+                    <li><i class="fab fa-whatsapp"></i><a href="https://wa.me/573117564624"> 3117564624</a></li>
+                    <li><i class="far fa-envelope rgtspace-5"></i><a href="mailto:info@mylifetravel.com.co?subject=Informacion&body=Life%20Travel"> info@mylifetravel.com</a></li>
+                </ul>
+            </div>
+            <div class="fl_right"> 
+                <ul class="nospace">
+                    <li><a href="{% url 'index' %}"><i class="fas fa-home"></i></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper row1">
+        <header id="header" class="hoc clear">
+            <div id="logo" class="fl_left"> 
+                <h1><a href="{% url 'index' %}">{{Setting.sName}}</a></h1>
+            </div>
+            <nav id="mainav" class="fl_right"> 
+                <ul class="clear">
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li class="active"><a href="#">Catalogo</a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+    <div class="wrapper row3">
+      <main class="hoc container clear"> 
+        <div class="content"> 
+          <div id="gallery">
+            <figure>
+              <header class="heading"></header>
+              <div class="sectiontitle">
+                <p class="nospace font-xs black-slogan">¡Descubre el lugar perfecto para tus vacaciones!</p>
+                <p class="heading underline font-x2"> {% if iTitle %}{{iTitle}}S{% else %}CATALOGO{% endif %}</p>
+              </div>
+              <ul class="flex-wrap justify-center nospace clear">
+                  {% for i in iHotel %}
+                    {% if hType != 't' %}
+                      <li class="gallery-flex">
+                        <a class="imgover" href="{% url 'info-hotel' hCode=i.hCode %}"><img class="gallery-img" src="{{i.hBanner.url}}" alt=""></a>
+                        <div class="info-gallery border-bottom05">
+                          <div class="flex-row space-between">
+                            <span> {{i.hHotel}}</span>
+                            <span><i class="fas fa-barcode"></i> {{i.hCode}}</span>
+                          </div>
+                          <div class="flex-row space-between">
+                            <span><i class="fas fa-map-marker-alt"></i><a target="blank" href="{{i.hMap}}"> {{i.hLocation}}</a></span>
+                            <span> {{i.hValue|intcomma}} ($COP)</span>
+                          </div>
+                        </div>
+                      </li>
+                    {% else %}
+                      <li class="gallery-flex ">
+                        <a href="{% url 'info-tours' tCode=i.tCode %}"><img class="gallery-img" src="{{i.tBanner.url}}" alt=""></a>
+                        <div class="info-gallery border-bottom05">
+                          <div class="flex-row space-between">
+                            <span> {{i.tTour}}</span>
+                            <span><i class="fas fa-barcode"></i> {{i.tCode}}</span>
+                          </div>
+                          <div class="flex-row space-between">
+                            <span><i class="fas fa-map-marker-alt"></i><a target="blank" href="{{i.tMap}}"> {{i.tLocation}}</a></span>
+                            <span> {{i.tValue|intcomma}} ($COP)</span>
+                          </div>
+                        </div>
+                      </li>
+                    {% endif %}
+                  {% endfor %}
+              </ul>
+              <figcaption></figcaption>
+            </figure>
+          </div>
+          <!-- ################################################################################################ -->
+          {% if iHotel.has_other_pages %}
+          <nav class="pagination">
+            <ul>
+              {% if iHotel.has_previous %}
+                  <li><a href="?page={{ iHotel.previous_page_number }}">&laquo;</a></li>
+              {% else %}
+                  <li><a href="">&laquo;</a></li>
+              {% endif %}
+              {% for page in iHotel.paginator.page_range %}
+                  {% if page == iHotel.number %}
+                      <li class="current"><a class="current" href="">{{ page }}</a></li>
+                  {% else %}
+                      <li><a href="?page={{ page }}">{{ page }}</a></li>
+                  {% endif %}
+              {% endfor %}
+              {% if iHotel.has_next %}
+                  <li><a href="?page={{ iHotel.next_page_number }}">&raquo;</a></li>
+              {% else %}
+              <li><a href="">&raquo;</a></li>
+              {% endif %}
+            </ul>
+          </nav>
+          {% endif %}
+        </div>
+        <div class="clear"></div>
+      </main>
+    </div>
+    <!-- ################################################################################################ -->
+    <!-- ################################################################################################ -->
+    <!-- ################################################################################################ -->
+    <div class="bgded overlay row4" style="background-image:url( {% static '/app/img/backgrounds/04.png' %} );">
+        <footer id="footer" class="hoc clear"> 
+            <ul class="nospace clear">
+                <li class="one_quarter first">
+                    <div class="block clear"><a href="https://wa.me/{{Setting.sIdx}}{{Setting.sTel}}"><i class="fab fa-whatsapp"></i></a><span><strong> WhatsApp:</strong><br> +{{Setting.sIdx}} {{Setting.sTel}}</span></div>
+                </li>
+                <li class="one_quarter">
+                    <div class="block clear"><a href="mailto:{{Setting.sEmail}}?subject=Informacion&body=Life%20Travel"><i class="fas fa-envelope"></i></a> <span><strong>Email:</strong><br> {{Setting.sEmail}} </span></div>
+                </li>
+                <li class="one_quarter">
+                    <div class="block clear"><a href="#"><i class="fas fa-clock"></i></a> <span><strong> Lunes - Sabados:</strong><br> {{Setting.sTime1}}am - {{Setting.sTime2}}pm</span></div>
+                </li>
+                <li class="one_quarter">
+                    <div class="block clear"><a href="#"><i class="fas fa-map-marker-alt"></i></a> <span><strong>Oficinas:</strong><br> {{Setting.sAddress}}</span></div>
+                </li>
+            </ul>
+        </footer>
+    </div>
+    <!-- ################################################################################################ -->
+    <!-- ################################################################################################ -->
+    <a id="backtotop" href="#top"><i class="fas fa-chevron-up"></i></a>
+    <!-- JAVASCRIPTS -->
+    <script src="{% static '/app/js/jquery.form.js' %}"></script>
+    <script src="{% static '/app/js/jquery.min.js' %}"></script>
+    <script src="{% static '/app/js/jquery.backtotop.js' %}"></script>
+    <script src="{% static '/app/js/jquery.overlay.js' %}"></script>
+    <script src="{% static '/app/js/jquery.mobilemenu.js' %}"></script>
+</div>
+{% endblock %}
+<!--<style>body {font-family: "Animace", sans-serif;}</style>-->
+</body>
+</html>
+
+
