@@ -303,7 +303,7 @@ admin.site = AdminSite
 
 AdminSite.site_header = "MYLIFETRAVEL"
 
-admin.site.register(model.Account, UserAuthAdmin)
+#admin.site.register(model.Account, UserAuthAdmin)
 admin.site.register(model.Hotels, HotelsAdmin)
 admin.site.register(model.News, NewsAdmin)
 admin.site.register(model.Tours, ToursAdmin)
