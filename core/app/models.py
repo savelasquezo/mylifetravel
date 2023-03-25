@@ -38,7 +38,7 @@ class Hotels(models.Model):
     hBanner = models.ImageField(_("Miniatura"), height_field=None, width_field=None, max_length=64,
         upload_to="media/index/banner/hotel", help_text="Width/Height 1.3x")
     
-    hText = models.TextField(_("Texto"),blank=True, null=True, max_length=512,
+    hText = models.TextField(_("Texto"),blank=True, null=True, max_length=224,
         help_text="Descripcion Resumida del Inmueble")
     
     hTextX = models.TextField(_("Texto"),blank=True, null=True, max_length=1024,
