@@ -135,6 +135,7 @@ address, article, aside, figcaption, figure, footer, header, main, nav, section{
 /* Spacing
 --------------------------------------------------------------------------------------------------------------- */
 .btmspace-00{margin-bottom:0px;}
+.btmspace-05{margin-bottom:5px;}
 .btmspace-10{margin-bottom:10px;}
 .btmspace-15{margin-bottom:15px;}
 .btmspace-20{margin-bottom:20px;}
@@ -152,11 +153,23 @@ address, article, aside, figcaption, figure, footer, header, main, nav, section{
 .rgtspace-20{margin-right:20px;}
 .rgtspace-30{margin-right:30px;}
 
+.lft-space-10{margin-left:-10px;}
+.lftspace-5{margin-left:5px;}
+.lftspace-10{margin-left:10px;}
+.lftspace-15{margin-left:15px;}
+.lftspace-20{margin-left:20px;}
+.lftspace-30{margin-left:30px;}
+
 .inspace-5{padding:5px;}
 .inspace-10{padding:10px;}
 .inspace-15{padding:15px;}
 .inspace-20{padding:20px;}
 .inspace-30{padding:30px;}
+
+.border-all05{border-radius: 5px;}
+.border-all10{border-radius: 10px;}
+.border-all20{border-radius: 20px;}
+.border-all99{border-radius: 9999px;}
 
 .border-bottom05{border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;}
 .border-bottom10{border-bottom-left-radius: 10px;border-bottom-right-radius: 10px;}

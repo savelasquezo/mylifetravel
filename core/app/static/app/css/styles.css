@@ -398,6 +398,10 @@ input:focus, textarea:focus, *:required:focus{border-color:#FBAB45 !important;}
 
 
 
+
+.btn-ico{padding:8px 18px 10px; text-transform:uppercase; font-size: x-large;color: #733863;}
+.btn-ico:hover, .btn-ico.inverse{color:#401234;; border-color:inherit;}
+
 .heading.underline::after{background-color:#FA8D0A;}
 
 
