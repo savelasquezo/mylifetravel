@@ -7,10 +7,10 @@ from django.utils import timezone
 lst_sts = (('g','Glamping'),('i','Inmueble'))
 
 def CustomUploadToHotel(instance, filename):
-    return f"uploads/hotel/{instance.hHotel.hHotel}/{filename}"
+    return f"media/hotel/{instance.hHotel.hHotel}/{filename}"
 
 def CustomUploadToTours(instance, filename):
-    return f"uploads/tours/{instance.tTour.tTour}/{filename}"
+    return f"media/tours/{instance.tTour.tTour}/{filename}"
 
 class Account(AbstractUser):
 
@@ -36,7 +36,7 @@ class Hotels(models.Model):
         help_text="Valor de Estadia Dia/Noche ($COP)")
 
     hBanner = models.ImageField(_("Miniatura"), height_field=None, width_field=None, max_length=64,
-        upload_to="uploads/index/banner/hotel", help_text="Width/Height 1.3x")
+        upload_to="media/index/banner/hotel", help_text="Width/Height 1.3x")
     
     hText = models.TextField(_("Texto"),blank=True, null=True, max_length=512,
         help_text="Descripcion Resumida del Inmueble")
@@ -103,7 +103,7 @@ class Tours(models.Model):
         help_text="URL Ubicacion del Tour https://www.google.com/maps/search/?api=1&query=40.712776,-74.005974")
 
     tBanner = models.ImageField(_("Miniatura"), height_field=None, width_field=None, max_length=64,
-        upload_to="uploads/index/banner/tours", help_text="Width/Height 1x")
+        upload_to="media/index/banner/tours", help_text="Width/Height 1x")
 
     tValue = models.IntegerField(_("Valor"),blank=True, null=True, default=0)
     tAmmount = models.IntegerField(_("Cupos"),blank=True, null=True, default=0)

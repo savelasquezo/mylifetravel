@@ -1,3 +1,6 @@
+#Settings
+os.py
+
 # Migrations
 **/migrations/*
 !migrations/__init__.py
@@ -13,9 +16,12 @@ out.log
 **/users/
 !users/README.md
 
-#Uploads/FilesUser
+#Uploads/Media
 **/uploads/*
 uploads/
+
+**/media/*
+media/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
