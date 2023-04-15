@@ -23,8 +23,9 @@
       <div id="topbar" class="hoc clear">
         <div class="fl_left">
           <ul class="nospace">
-            <li><i class="fab fa-whatsapp"></i><a href="https://wa.me/573117564624"> +57 3117564624</a></li>
-            <li><i class="far fa-envelope rgtspace-5"></i><a href="mailto:info@mylifetravel.com.co?subject=Informacion&body=MyLife%20Travel"> info@mylifetravel.com</a></li>
+            <li><i class="fab fa-whatsapp"></i><a href="https://wa.me/{{Setting.sIdx}}{{Setting.sTel}}" target="blank"> +{{Setting.sIdx}} {{Setting.sTel}}</a></li>
+            <li><i class="far fa-envelope rgtspace-5"></i>
+              <a href="mailto:{{Setting.sEmail}}?subject=Informacion&body=MyLife%20Travel"> {{Setting.sEmail}} </a></li>
           </ul>
         </div>
         <div class="fl_right"> 
@@ -170,7 +171,7 @@
                   <div class="excerpt">
                     <h6 class="heading">TITULO OCACIONAL</h6>
                     <p>Molestie vulputate a luctus nulla nulla eleifend justo in libero feugiat congue donec sit amet pharetra velit.</p>
-                    <footer><a class="btn" href="#">Read More</a></footer>
+                    <footer><a class="btn" href="#">Informacion</a></footer>
                   </div>
                 </article>
               </li>
@@ -203,19 +204,19 @@
       </div>
       <ul id="stats" class="nospace group">
         <li><i class="fas fa-user"></i>
-          <p><a href="#">{{ListBooking.0}}</a></p>
+          <p><a>{{ListBooking.0}}</a></p>
           <p>Hoteles</p>
         </li>
         <li><i class="fas fa-leaf"></i>
-          <p><a href="#">{{ListBooking.1}}</a></p>
+          <p><a>{{ListBooking.1}}</a></p>
           <p>Inmuebles</p>
         </li>
         <li><i class="fas fa-globe"></i>
-          <p><a href="#">{{ListBooking.2}}</a></p>
+          <p><a>{{ListBooking.2}}</a></p>
           <p>Glampings</p>
         </li>
         <li><i class="fas fa-map-marker-alt"></i>
-          <p><a href="#">{{ListBooking.3}}</a></p>
+          <p><a>{{ListBooking.3}}</a></p>
           <p>Tours</p>
         </li>
       </ul>

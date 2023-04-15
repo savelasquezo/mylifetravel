@@ -1,26 +1,8 @@
-import os, re
 import random
 
-from django.utils import timezone
 from django.views.generic.base import TemplateView
 from django.core.paginator import Paginator
-from django.shortcuts import redirect, render
-from django.urls import reverse
-from django.db.models import F
-from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth.decorators import user_passes_test
-from django.utils.decorators import method_decorator
-from django.contrib.auth.forms import PasswordResetForm
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.encoding import force_bytes, force_str
-from django.db.models.query_utils import Q
-from django.http import HttpResponse
-from django.core.mail import send_mail, BadHeaderError
-from django.template.loader import render_to_string
-from django.contrib.auth.views import LoginView
-from django.contrib.auth import login
+from django.shortcuts import render
 from django.http import JsonResponse
 from django.db.models import Count
 
@@ -76,7 +58,7 @@ class GalleryView(TemplateView):
         ITEMS = 6
         
         HotelList = model.Hotels.objects.all().order_by('id')
-        iHotel = Paginator(HotelList,ITEMS).get_page(request.GET.get('page')) if HotelList else "N/A"
+        iHotel = Paginator(HotelList,ITEMS).get_page(request.GET.get('page')) if HotelList else []
         
         iHotelFix = range(0,(ITEMS - len(HotelList)%ITEMS))
         
@@ -99,13 +81,17 @@ class GalleryGroupView(TemplateView):
         ITEMS = 6
         
         rType = self.kwargs.get('hType')
-        
+
+        if rType == 't':
+            iTitle = model.Tours._meta.verbose_name
+
         HotelList = model.Hotels.objects.filter(hType=rType).order_by('id') if rType != 't' else model.Tours.objects.all()
-        iHotel = Paginator(HotelList,ITEMS).get_page(request.GET.get('page')) if HotelList else "N/A"
+        iHotel = Paginator(HotelList,ITEMS).get_page(request.GET.get('page')) if HotelList else []
         
-        iHotelFix = range(0,(ITEMS - len(HotelList)%ITEMS))
+        iHotelFix = range(0,(ITEMS - len(HotelList)%ITEMS)) if HotelList else 0
         
-        iTitle = HotelList.first().get_hType_display() if rType != 't' else model.Tours._meta.verbose_name
+        if rType != 't':
+            iTitle = HotelList.first().get_hType_display() if HotelList else []
         
         if iHotelFix == ITEMS and len(HotelList) != 0:
             iHotelFix = range(0,0)

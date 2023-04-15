@@ -23,8 +23,9 @@
         <div id="topbar" class="hoc clear">
             <div class="fl_left">
                 <ul class="nospace">
-                    <li><i class="fab fa-whatsapp"></i><a href="https://wa.me/573117564624"> 3117564624</a></li>
-                    <li><i class="far fa-envelope rgtspace-5"></i><a href="mailto:info@mylifetravel.com.co?subject=Informacion&body=Life%20Travel"> info@mylifetravel.com</a></li>
+                    <li><i class="fab fa-whatsapp"></i><a href="https://wa.me/{{Setting.sIdx}}{{Setting.sTel}}" target="blank"> +{{Setting.sIdx}} {{Setting.sTel}}</a></li>
+                    <li><i class="far fa-envelope rgtspace-5"></i>
+                        <a href="mailto:{{Setting.sEmail}}?subject=Informacion&body=Life%20Travel"> {{Setting.sEmail}} </a></li>
                 </ul>
             </div>
             <div class="fl_right"> 
@@ -61,7 +62,7 @@
         <footer id="footer" class="hoc clear"> 
             <ul class="nospace clear">
                 <li class="one_quarter first">
-                    <div class="block clear"><a href="https://wa.me/{{Setting.sIdx}}{{Setting.sTel}}"><i class="fab fa-whatsapp"></i></a><span><strong> WhatsApp:</strong><br> +{{Setting.sIdx}} {{Setting.sTel}}</span></div>
+                    <div class="block clear"><a href="https://wa.me/{{Setting.sIdx}}{{Setting.sTel}}" target="blank"><i class="fab fa-whatsapp"></i></a><span><strong> WhatsApp:</strong><br> +{{Setting.sIdx}} {{Setting.sTel}}</span></div>
                 </li>
                 <li class="one_quarter">
                     <div class="block clear"><a href="mailto:{{Setting.sEmail}}?subject=Informacion&body=Life%20Travel"><i class="fas fa-envelope"></i></a> <span><strong>Email:</strong><br> {{Setting.sEmail}} </span></div>

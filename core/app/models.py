@@ -236,9 +236,12 @@ class Settings(models.Model):
 
     sAddress = models.CharField(_("Address"), max_length=64, blank=True, null=True)
     
-    sURL1 = models.URLField(_("Instagram"), max_length=128, blank=True, null=True)
-    sURL2 = models.URLField(_("Facebook"), max_length=128, blank=True, null=True)
-    sURL3 = models.URLField(_("Twitter"), max_length=128, blank=True, null=True)
+    sURL1 = models.URLField(_("Instagram"), max_length=128, blank=True, null=True, 
+        help_text="https://www.instagram.com/")
+    sURL2 = models.URLField(_("Facebook"), max_length=128, blank=True, null=True, 
+        help_text="https://www.facebook.com/")
+    sURL3 = models.URLField(_("Twitter"), max_length=128, blank=True, null=True, 
+        help_text="https://twitter.com/")
 
     IsActive = models.BooleanField(_("¿Activo?"), default=True, unique=True)
 
