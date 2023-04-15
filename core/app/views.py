@@ -85,7 +85,7 @@ class GalleryGroupView(TemplateView):
         if rType == 't':
             iTitle = model.Tours._meta.verbose_name
 
-        HotelList = model.Hotels.objects.filter(hType=rType).order_by('id') if rType != 't' else model.Tours.objects.all()
+        HotelList = model.Hotels.objects.filter(hType=rType).order_by('id') if rType != 't' else model.Tours.objects.all().order_by('id')
         iHotel = Paginator(HotelList,ITEMS).get_page(request.GET.get('page')) if HotelList else []
         
         iHotelFix = range(0,(ITEMS - len(HotelList)%ITEMS)) if HotelList else 0

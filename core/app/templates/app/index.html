@@ -18,7 +18,7 @@
 <body>
 {% block block %}
 <!-- Top Background Image Wrapper -->
-<div class="bgded overlay" style="background-image:url( {% static '/app/img/backgrounds/01.png' %} );">
+<div class="bgded overlay" style="background-image:url( {{Setting.sBackground.url}} );">
     <div class="wrapper row0">
       <div id="topbar" class="hoc clear">
         <div class="fl_left">
@@ -62,7 +62,7 @@
     <div id="pageintro" class="hoc clear"> 
       <!-- ################################################################################################ -->
       <article>
-        <img src="{% static '/app/img/tools/logo.png' %}" id="logo-home" alt="logo">
+        <img src="{% static '/app/img/tools/logo.png' %}" id="logo-home" alt="" style="overflow:hidden;">
         <p class="white-slogan">Vive el mundo sin preocupaciones<br>  
           ¡Paquetes todo incluido a los destinos más populares!
         </p>
@@ -88,7 +88,7 @@
       <section id="introblocks">
         <ul class="nospace group btmspace-80">
           <li class="one_third first">
-            <figure><a class="imgover" href="{% url 'gallery-group' hType='t' %}"><img src="{% static '/app/img/pics/01.jpg' %}" alt=""></a>
+            <figure><a class="imgover" href="{% url 'gallery-group' hType='t' %}"><img src="{{Setting.sImg1.url}}" alt=""></a>
               <figcaption>
                 <h6 class="heading">TURISMO</h6>
                   <p>
@@ -99,7 +99,7 @@
             </figure>
           </li>
           <li class="one_third">
-            <figure><a class="imgover" href="{% url 'gallery-group' hType='i' %}"><img src="{% static '/app/img/pics/02.jpg' %}" alt=""></a>
+            <figure><a class="imgover" href="{% url 'gallery-group' hType='i' %}"><img src="{{Setting.sImg2.url}}" alt=""></a>
               <figcaption>
                 <h6 class="heading">VACACIONES</h6>
                   <p>
@@ -110,7 +110,7 @@
             </figure>
           </li>
           <li class="one_third">
-            <figure><a class="imgover" href="{% url 'gallery-group' hType='g' %}"><img src="{% static '/app/img/pics/03.jpg' %}" alt=""></a>
+            <figure><a class="imgover" href="{% url 'gallery-group' hType='g' %}"><img src="{{Setting.sImg3.url}}" alt=""></a>
               <figcaption>
                 <h6 class="heading">GAMPLING</h6>
                   <p>

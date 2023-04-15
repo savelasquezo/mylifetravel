@@ -36,9 +36,9 @@ class Hotels(models.Model):
         help_text="Valor de Estadia Dia/Noche ($COP)")
 
     hBanner = models.ImageField(_("Miniatura"), height_field=None, width_field=None, max_length=64,
-        upload_to="media/index/banner/hotel", help_text="Width/Height 1.3x")
+        upload_to="media/index/banner/hotel", help_text="720px-Width 600px-Height")
     
-    hText = models.TextField(_("Texto"),blank=True, null=True, max_length=224,
+    hText = models.TextField(_("Texto"),blank=True, null=True, max_length=512,
         help_text="Descripcion Resumida del Inmueble")
     
     hTextX = models.TextField(_("Texto"),blank=True, null=True, max_length=1024,
@@ -103,7 +103,7 @@ class Tours(models.Model):
         help_text="URL Ubicacion del Tour https://www.google.com/maps/search/?api=1&query=40.712776,-74.005974")
 
     tBanner = models.ImageField(_("Miniatura"), height_field=None, width_field=None, max_length=64,
-        upload_to="media/index/banner/tours", help_text="Width/Height 1x")
+        upload_to="media/index/banner/tours", help_text="300px-Width 300px-Height")
 
     tValue = models.IntegerField(_("Valor"),blank=True, null=True, default=0)
     tAmmount = models.IntegerField(_("Cupos"),blank=True, null=True, default=0)
@@ -242,6 +242,19 @@ class Settings(models.Model):
         help_text="https://www.facebook.com/")
     sURL3 = models.URLField(_("Twitter"), max_length=128, blank=True, null=True, 
         help_text="https://twitter.com/")
+
+    sBackground = models.ImageField(_("Background"), upload_to="media/index/settings/", height_field=None, width_field=None, max_length=64, blank=True, null=True,
+        help_text="1200px-Width 800px-Height")
+
+    sImg1 = models.ImageField(_("Turismo"), upload_to="media/index/settings/", height_field=None, width_field=None, max_length=64, blank=True, null=True,
+        help_text="360px-Width 280px-Height")
+
+    sImg2 = models.ImageField(_("Hoteles"), upload_to="media/index/settings/", height_field=None, width_field=None, max_length=64, blank=True, null=True,
+        help_text="360px-Width 280px-Height")
+
+    sImg3 = models.ImageField(_("Glampings"), upload_to="media/index/settings/", height_field=None, width_field=None, max_length=64, blank=True, null=True,
+        help_text="360px-Width 280px-Height")
+
 
     IsActive = models.BooleanField(_("¿Activo?"), default=True, unique=True)
 

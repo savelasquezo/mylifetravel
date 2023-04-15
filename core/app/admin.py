@@ -289,10 +289,18 @@ class SettingsAdmin(admin.ModelAdmin):
         ("sTime1","sTime2"),
         )}
 
+    fMedia = {"fields": (
+        "sBackground",
+        "sImg1",
+        "sImg2",
+        "sImg3",
+        )}
+
     fieldsets = (
         ("Configuracion", fConfig),
         ("Social", fSocial),
-        ("Horarios Atencion", fTimes)
+        ("Horarios Atencion", fTimes),
+        ("Imagenes", fMedia)
         )
 
 ##########################################################################
