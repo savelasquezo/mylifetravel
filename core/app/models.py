@@ -53,10 +53,10 @@ class Hotels(models.Model):
     hRooms = models.SmallIntegerField(_("Habitaciones"),blank=True, null=True, default=1)
     hUsers = models.SmallIntegerField(_("Capacidad"),blank=True, null=True, default=1)
 
-    hWifi = models.CharField(_("Wifi"), blank=True, null=True, help_text="Ejemplo: 200M")
-    hTV = models.CharField(_("TV"), blank=True, null=True, help_text="Ejemplo: Smart4K 60'")
-    hPool =  models.CharField(_("Zonas Humedas"), blank=True, null=True, help_text="Ejemplo: Olímpica/Jacuzzi")
-    hGames = models.CharField(_("Juegos"), blank=True, null=True, help_text="Ejemplo: Futbol/Basquetball")
+    hWifi = models.CharField(_("Wifi"), blank=True, null=True, max_length=64, help_text="Ejemplo: 200M")
+    hTV = models.CharField(_("TV"), blank=True, null=True, max_length=64, help_text="Ejemplo: Smart4K 60'")
+    hPool =  models.CharField(_("Zonas Humedas"), blank=True, max_length=64, null=True, help_text="Ejemplo: Olímpica/Jacuzzi")
+    hGames = models.CharField(_("Juegos"), blank=True, null=True, max_length=64, help_text="Ejemplo: Futbol/Basquetball")
 
     IsActive = models.BooleanField(_("¿Activo?"), default=True)
 
