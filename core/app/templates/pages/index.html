@@ -1,0 +1,259 @@
+{% load static tailwind_tags %}
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!--######################################################################-->
+    <!-- Webpage/Metadas ==================================================== -->
+    <title>MyLifeTravel</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon.ico' %}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="MyLifeTravel">
+    <meta name="description" content="¡Turismo Colombia!">
+    <meta name="keywords" content="">
+    <!--######################################################################-->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- FontAwensome/Tailwind ==================================================== -->
+    {% tailwind_css %}
+    <link rel="stylesheet" href="{% static 'fonts/Animeace2-EadMr.css' %}">
+    <link rel="stylesheet" href="{% static 'fonts/MikeSamiya-EadMr.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    <!-- OwlCarousel ============================================================== -->
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/owl.theme.default.min.css' %}">
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/owl.carousel.min.js' %}"></script>
+</head>
+<body>
+    <!--######################################################################-->
+    <!-- Header/section ==================================================== -->
+    <header>
+      <nav class="absolute top-0 left-0 right-0 z-10">
+        <div class="flex flex-row items-center justify-between px-12 py-2">
+          <a href="/" class="flex flex-row items-center">
+            <p><img src="{% static 'logo.webp' %}" alt="" class="w-12 h-12"></p>
+            <p class="text-2xl font-samiya text-gray-800">My LifeTravel</p>
+          </a>
+          <div class="text-gray-200 uppercase font-bold">
+            <ul class="flex space-x-8">
+              <li ><a href="{% url 'index' %}">Inicio</a></li>
+              {% if user.is_authenticated %}
+                <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
+                <li ><a href="{% url 'booking' %}">Reservas</a></li>
+                <li ><a href="{% url 'logout' %}">Salir</a></li>
+              {% else %}
+                <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
+                <li ><a href="{% url 'login' %}">Ingresar</a></li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+        <!--<div id="myDiv" class="fixed top-0 left-0 right-0 z-10 opacity-0 transition-opacity duration-700">
+          <div class="flex flex-row items-center justify-between px-12 py-2 bg-gradient-to-r from-rgb0 to-rgb4">
+              <a href="/" class="flex flex-row items-center">
+                <p><img src="{% static 'img/icon.png' %}" alt="" class="w-12 h-12"></p>
+                <p class="text-2xl font-samiya text-gray-100">My LifeTravel</p>
+              </a>
+              <div class="text-gray-100 uppercase font-bold">
+                <ul class="flex space-x-8">
+                  <li ><a href="{% url 'index' %}">Inicio</a></li>
+                  {% if user.is_authenticated %}
+                    <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
+                    <li ><a href="{% url 'index' %}">Reservas</a></li>
+                    <li ><a href="{% url 'index' %}">Salir</a></li>
+                  {% else %}
+                    <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
+                    <li ><a href="{% url 'index' %}">Ingresar</a></li>
+                  {% endif %}
+                </ul>
+              </div>
+          </div>
+        </div>-->
+      </nav>
+      <div class="flex flex-row items-center bg-image-01">
+        <div class="flex flex-col justify-start my-36 ml-16 items-center">
+          <p class="text-8xl font-samiya text-rgb1 text-center">My LifeTravel</p>
+          <div class="flex flex-row uppercase gap-x-4 items-center mt-12 justify-start">
+            <p class="">Una forma diferente de emprender un viaje</p>
+            <a href=https://wa.me/{{Settings.sIdx}}{{Settings.sTel}} target="_blank" class="rounded-full cursor-pointer bg-gray-600 transition duration-300 hover:bg-gray-800 text-gray-100 w-32 py-2 text-center uppercase">CONTACTAR</a>
+          </div>
+        </div>
+      </div>
+      <div class="w-1/3"></div>
+    </header>
+    <!--################################################################################-->
+    <!----><div class="flex justify-center px-24"><hr class="mStyleHR w-full"></div><!---->
+    <!-- Content/section ===============================================================-->
+    <section>
+      <p class="text-center text-4xl mt-8 font-samiya text-rgb1">¡SERVICIOS!</p>
+      <p class="text-center my-4">¡Aprovecha estas imperdibles promociones!</p>
+      <div class="flex flex-row items-center justify-center overflow-hidden">
+      <div class="h-screen w-full flex flex-row px-32 py-12 gap-x-16">
+        <a href="{% url 'gallery-group' hType='i' %}" class="w-1/3 flex flex-col rounded-xl shadow-gray-800 shadow-lg cursor-pointer hover:scale-105 transition duration-300">
+          <img class="h-1/2 rounded-t-xl" src="{% static 'img/post/img2.jpg' %}" alt="">
+          <div class="h-1/2 flex flex-col items-center justify-center text-center px-6">
+            <p class="mb-2 font-bold text-3xl text-pink-900">HOTELES</p>
+            <p class="text-sm text-gray-800">Alquiler de cabañas y fincas turísticas. Descubre la auténtica vida rural con todas
+              las comodidades que necesitas</p>
+          </div>
+          <div class="h-16 flex flex-row bg-green-800 rounded-b-xl p-4">
+            <div class="w-1/3 text-gray-200 flex flex-col justify-center items-center">
+              <p class="text-sm">{{Settings.sHViews|default:"0"}}</p>
+              <p class="text-xs uppercase font-semibold">Vistas</p>
+            </div>
+            <div class="w-1/3 text-gray-200 flex flex-col justify-center items-center border-pink-800">
+              <p class="text-sm">{{InfoBooking.i.1|default:"0"}}</p>
+              <p class="text-xs uppercase font-semibold">Usuarios</p>
+            </div>
+            <div class="w-1/3 text-gray-200 flex flex-col justify-center items-center">
+              <p class="text-sm">{{InfoBooking.i.0|default:"0"}}</p>
+              <p class="text-xs uppercase font-semibold">Hoteles</p>
+            </div>
+          </div>
+        </a>
+        <a href="{% url 'gallery-group' hType='g' %}" class="w-1/3 flex flex-col rounded-xl shadow-gray-800 shadow-lg cursor-pointer hover:scale-105 transition duration-300">
+          <img class="h-1/2 rounded-t-xl" src="{% static 'img/post/img3.jpg' %}" alt="">
+          <div class="h-1/2 flex flex-col items-center justify-center text-center px-6">
+            <p class="mb-2 font-bold text-3xl text-pink-900">GAMPLING</p>
+            <p class="text-sm text-gray-800">Aventura y la emoción de acampar al aire libre con las comodidades y el confort
+              de un hotel de lujo.</p>
+          </div>
+          <div class="h-16 flex flex-row bg-red-800 rounded-b-xl p-4">
+            <div class="w-1/3 text-gray-200 flex flex-col justify-center items-center">
+              <p class="text-sm">{{Settings.sGViews|default:"0"}}</p>
+              <p class="text-xs uppercase font-semibold">Vistas</p>
+            </div>
+            <div class="w-1/3 text-gray-200 flex flex-col justify-center items-center border-pink-800">
+              <p class="text-sm">{{InfoBooking.g.1|default:"0"}}</p>
+              <p class="text-xs uppercase font-semibold">Usuarios</p>
+            </div>
+            <div class="w-1/3 text-gray-200 flex flex-col justify-center items-center">
+              <p class="text-sm">{{InfoBooking.g.0|default:"0"}}</p>
+              <p class="text-xs uppercase font-semibold">Glampings</p>
+            </div>
+          </div>
+        </a>
+        <a href="{% url 'gallery-group' hType='t' %}" class="w-1/3 flex flex-col rounded-xl shadow-gray-800 shadow-lg cursor-pointer hover:scale-105 transition duration-300">
+          <img class="h-1/2 rounded-t-xl" src="{% static 'img/post/img1.jpg' %}" alt="">
+          <div class="h-1/2 flex flex-col items-center justify-center text-center px-6">
+            <p class="mb-2 font-bold text-3xl text-pink-900">TURISMO</p>
+            <p class="text-sm text-gray-800">¡Reserva ahora tus vacaciones y prepárate para vivir una experiencia única en los destinos 
+              turísticos mas spectaculares!</p>
+          </div>
+          <div class="h-16 flex flex-row bg-rgb0 rounded-b-xl p-4 items-center justify-center">
+            <div class="w-1/3 h-full text-gray-200 flex flex-col justify-center items-center">
+              <p class="text-sm">{{Settings.sTViews|default:"0"}}</p>
+              <p class="text-xs uppercase font-semibold">Vistas</p>
+            </div>
+            <div class="w-1/3 h-full text-gray-200 flex flex-col justify-center items-center border-pink-800">
+              <p class="text-sm">{{InfoBooking.t.1|default:"0"}}</p>
+              <p class="text-xs uppercase font-semibold">Usuarios</p>
+            </div>
+            <div class="w-1/3 h-full text-gray-200 flex flex-col justify-center items-center">
+              <p class="text-sm">{{InfoBooking.t.1|default:"0"}}</p>
+              <p class="text-xs uppercase font-semibold">Tours</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+    <section>
+      <p>{{ListItems}}</p>
+      <p class="text-center text-4xl mt-8 font-samiya text-rgb1">¡POPULARES!</p>
+      <p class="text-center my-4">¡Imperdibles destinos turisticos!</p>
+      <div class="grid place-items-center h-screen mt-2 ml-12 overflow-hidden">
+        <div class="owl-carousel">
+          {% if iHotel %}
+            {% for i in iHotel %}
+            <article class="card text-white">
+              <img class="card__background" src="{{i.hBanner.url}}" alt="" width="1920" height="1693"/>
+              <div class="card__content | flow">
+                <div class="card__content--container | flow">
+                  <p class="card__title uppercase font-semibold">{{i.hHotel}}</p>
+                  <p class="card__description text-gray-300 overflow-hidden text-ellipsis h-[4.5em]">{{i.hText}}</p>
+                    <form target="_self" method="POST">
+                      {% csrf_token %}
+                      <input type="hidden" name="id" value="{{i.id}}">
+                      <p class="flex justify-center items-center bg-gradient-to-r from-rgb1 to-rgb3 rounded-full text-white text-sm font-semibold py-2">
+                        {% if user.is_authenticated %}
+                          <input type="submit" class="cursor-pointer w-full" value='SOLICITAR'>
+                        {% else %}
+                          <a href="{% url 'login' %}">INGRESAR</a>
+                        {% endif %}
+                      </p>
+                    </form>
+                </div>
+              </div>
+            </article>
+            {% endfor %}
+          {% else %}
+            {% for _ in '1' %}
+            <article class="card">
+              <img class="card__background" src="https://i.imgur.com/QYWAcXk.jpeg" alt="" width="1920" height="1693"/>
+              <div class="card__content | flow">
+                <div class="text-gray-300 card__content--container | flow">
+                  <p class="card__title">Lorem ipsum</p>
+                  <p class="card__description">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum in labore laudantium deserunt fugiat numquam.
+                  </p>
+                  <p class="flex justify-center items-center bg-gradient-to-r from-rgb1 to-rgb3 rounded-full text-white text-sm font-semibold cursor-pointer py-2">
+                    <a href="">SOLICITAR</a>
+                  </p>
+                </div>
+              </div>
+            </article>
+            {% endfor %}
+          {% endif %}
+        </div>
+        <script src="{% static 'js/owl.carousel.js' %}"></script>
+      </div>
+    </section>
+    <!--################################################################################-->
+    <!----><div class="flex justify-center px-24"><hr class="mStyleHR w-full"></div><!---->
+    <!-- Footer/section =============================================================== -->
+    <footer>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 items-center bg-neutral-800 py-2 px-8">
+        <div class="flex flex-row">
+          <img src="{% static 'logo.webp' %}" class="h-16" />
+          <div class="flex flex-col justify-center">
+            <p class="text-gray-200 text-left ml-4">MyLifeTravel</p>
+            <p class="text-gray-400 text-left ml-4 text-xs">{{Settings.sEmail}}</p>
+          </div>
+        </div>
+        <div class="flex flex-row gap-4 items-center">
+          <div class="flex flex-col text-xs">
+            <p class="text-gray-200 uppercase">Contactanos</p>
+            <p class="text-gray-400">WhatsApp: {{Settings.sTel}}</p>
+          </div>
+          <div>
+            <a href="https://wa.me/{{Settings.sIdx}}{{Settings.sTel}}" target="_blank" class="bg-gray-500 hover:bg-gray-600 text-gray-200 font-bold py-2 px-4 rounded-md text-xs max-w-fit">CHAT</a>
+          </div>
+        </div>
+        <div class="flex flex-row gap-4 whitespace-nowrap items-center">
+          <div class="flex flex-col text-xs">
+            <p class="text-gray-200 uppercase">Atencion</p>
+            <p class="text-gray-400 text-left text-xs">Lunes-Sabado {{Settings.sTime1|time:"g"}}-{{Settings.sTime2|time:"g"}}pm</p>
+          </div>
+          <div class="text-gray-400 text-left text-xs">
+            <p>Jornada Continua</p>
+            <p>{{Settings.sAddress}}</p>
+          </div>
+        </div>
+        <div class="flex flex-row items-center space-x-2 justify-end">
+          <a href="{{Settings.sURL2}}" target="_blank"><p class="w-8 h-8 rounded-full bg-gray-200 hover:bg-facebook hover:text-white transition duration-300"><i class="p-2 fab fa-facebook"></i></p></a>
+          <a href="{{Settings.sURL1}}" target="_blank"><p class="w-8 h-8 rounded-full bg-gray-200 hover:bg-instagram hover:text-white transition duration-300"><i class="p-2 fab fa-instagram"></i></p></a>
+          <a href="{{Settings.sURL3}}" target="_blank"><p class="w-8 h-8 rounded-full bg-gray-200 hover:bg-twiter hover:text-white transition duration-300"><i class="p-2 fab fa-twitter"></i></p></a>
+        </div>
+      </div>
+    </footer>
+    <!--######################################################################-->
+    <!--######################################################################-->
+    <script src="{% static 'js/navbar.js' %}"></script>
+</body>
+</html>
+

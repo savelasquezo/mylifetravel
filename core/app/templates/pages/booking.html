@@ -1,0 +1,179 @@
+{% load static tailwind_tags %}
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!--######################################################################-->
+    <!-- Webpage/Metadas ==================================================== -->
+    <title>MyLifeTravel</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon.ico' %}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="MyLifeTravel">
+    <meta name="description" content="¡Turismo Colombia!">
+    <meta name="keywords" content="">
+    <!--######################################################################-->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- FontAwensome/Tailwind ==================================================== -->
+    {% tailwind_css %}
+    <link rel="stylesheet" href="{% static 'fonts/MikeSamiya-EadMr.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+</head>
+<body>
+    <!--######################################################################-->
+    <!-- Header/section ==================================================== -->
+    <header>
+      <nav class="absolute top-0 left-0 right-0 z-10">
+        <div class="w-full flex flex-row items-center justify-between px-12 py-2 bg-gradient-to-b from-blue-200 to-white">
+          <div class="flex flex-row items-center">
+            <a href="/"><img src="{% static 'img/icon.png' %}" alt="" class="w-12 h-12"></a>
+            <p class="text-2xl font-samiya text-gray-600">My LifeTravel</p>
+          </div>
+          <div class="text-gray-600 uppercase font-bold">
+            <ul class="flex space-x-8">
+              <li ><a href="{% url 'index' %}">Inicio</a></li>
+              {% if user.is_authenticated %}
+                <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
+                <li ><a href="{% url 'booking' %}">Reservas</a></li>
+                <li ><a href="{% url 'logout' %}">Salir</a></li>
+              {% else %}
+                <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
+                <li ><a href="{% url 'login' %}">Ingresar</a></li>
+              {% endif %}
+              </ul>
+            </div>
+        </div>
+      </nav>
+    </header>
+    <!--######################################################################-->
+    <!--###########--><hr class="mt-10 mx-10 divider gradient"><!--###########-->
+    <!-- Content/section =====================================================-->
+    <section>
+      {% if messages %}
+      <div class="{{ message.tags }} mt-8">
+          <ul class="ul-messages text-xs items-center text-center pt-4" style="min-height: 64px;">
+          {% for message in messages %}
+              <p {% if message.tags %} class="font-bold {{ message.tags }} {{ message.extra_tags }}"{% endif %}>{{ message }}</p>
+          {% endfor %}
+          </ul>
+      </div>
+      {% else %}
+          <div class="flex justify-center mt-10" style="min-height: 56px;">
+            <p class="text center uppercase text-2xl">Booking</p>
+          </div>
+      {% endif %}
+      <div class="overflow-x-auto px-12 h-[80vh]">
+        <table class="w-full text-sm text-gray-500 dark:text-gray-600 text-center">
+          <thead class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" class="w-10 px-6 py-3">ID-RESERVA</th>
+              <th scope="col" class="w-10 px-6 py-3">INMUEBLE</th>
+              <th scope="col" class="w-10 px-6 py-3">PRECIO</th>
+              <th scope="col" class="w-10 px-6 py-3">INSCRITO</th>
+              <th scope="col" class="w-10 px-6 py-3">FECHA</th>
+              <th scope="col" class="w-10 px-6 py-3">ESTADO</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i in iListBooking %}
+            <tr class="h-14 bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+              <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{i.name}}</th>
+              <td class="w-10 px-6 py-4">{{ i.id }}</td>
+              <td class="w-10 px-6 py-4">{{i.price}}</td>
+              <td class="w-10 px-6 py-4">{{ i.iDateBooking }}</td>
+              <td class="w-10 px-6 py-4">{{ i.eDateBooking }}</td>
+              <td class="w-10 px-6 py-4">{{ i.is_paid }}</td>
+            </tr>
+            {% endfor %}
+            {% if not iListBooking.has_next %}
+              {% for i in FixListPage %}
+              <tr class="h-14 bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td class="px-6 py-4"></td>
+              </tr>
+            {% endfor %}
+            {% elif not iListBooking.has_other_pages %}
+              {% for i in FixListPage %}
+              <tr class="h-14 bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td class="px-6 py-4"></td>
+              </tr>
+            {% endfor %}           
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+      {% if iListBooking.has_other_pages %}
+      <nav class="flex items-center justify-center w-full text-center my-4">
+        <ul>
+          {% if iListBooking.has_previous %}
+              <li class="inline-block mx-2 w-4"><a class="block border-none font-normal" 
+                href="?page={{ iListBooking.previous_page_number }}">&laquo;</a></li>
+          {% else %}
+              <li class="inline-block mx-2 w-4"><a class="block border-none  font-normal"
+                href="">&laquo;</a></li>
+          {% endif %}
+          {% for page in iListBooking.paginator.page_range %}
+              {% if page == iListBooking.number %}
+              <li class="inline-block mx-2 w-4 text-gray-600">
+                <a class="block border-none font-normal"href="">{{ page }}</a></li>
+              {% else %}
+              <li class="inline-block mx-2 w-4"><a class="block border-none font-normal"
+                    href="?page={{ page }}">{{ page }}</a></li>
+              {% endif %}
+          {% endfor %}
+          {% if iListBooking.has_next %}
+              <li class="inline-block mx-2 w-4"><a class="block border-none font-normal"
+                href="?page={{ iListBooking.next_page_number }}">&raquo;</a></li>
+          {% else %}
+              <li class="inline-block mx-2 w-4"><a class="block border-none font-normal"
+                href="">&raquo;</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+    </section>
+    <!--######################################################################-->
+    <!-- Footer/section ===================================================== -->
+    <footer>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 items-center bg-neutral-800 py-2 px-8">
+        <div class="flex flex-row">
+          <img src="{% static 'logo.webp' %}" class="h-16" />
+          <div class="flex flex-col justify-center">
+            <p class="text-gray-200 text-left ml-4">MyLifeTravel</p>
+            <p class="text-gray-400 text-left ml-4 text-xs">{{Settings.sEmail}}</p>
+          </div>
+        </div>
+        <div class="flex flex-row gap-4 items-center">
+          <div class="flex flex-col text-xs">
+            <p class="text-gray-200 uppercase">Contactanos</p>
+            <p class="text-gray-400">WhatsApp: {{Settings.sTel}}</p>
+          </div>
+          <div>
+            <a href="https://wa.me/{{Settings.sIdx}}{{Settings.sTel}}" target="_blank" class="bg-gray-500 hover:bg-gray-600 text-gray-200 font-bold py-2 px-4 rounded-md text-xs max-w-fit">CHAT</a>
+          </div>
+        </div>
+        <div class="flex flex-row gap-4 whitespace-nowrap items-center">
+          <div class="flex flex-col text-xs">
+            <p class="text-gray-200 uppercase">Atencion</p>
+            <p class="text-gray-400 text-left text-xs">Lunes-Sabado {{Settings.sTime1|time:"g"}}-{{Settings.sTime2|time:"g"}}pm</p>
+          </div>
+          <div class="text-gray-400 text-left text-xs">
+            <p>Jornada Continua</p>
+            <p>{{Settings.sAddress}}</p>
+          </div>
+        </div>
+        <div class="flex flex-row items-center space-x-2 justify-end">
+          <a href="{{Settings.sURL2}}" target="_blank"><p class="w-8 h-8 rounded-full bg-gray-200 hover:bg-facebook hover:text-white transition duration-300"><i class="p-2 fab fa-facebook"></i></p></a>
+          <a href="{{Settings.sURL1}}" target="_blank"><p class="w-8 h-8 rounded-full bg-gray-200 hover:bg-instagram hover:text-white transition duration-300"><i class="p-2 fab fa-instagram"></i></p></a>
+          <a href="{{Settings.sURL3}}" target="_blank"><p class="w-8 h-8 rounded-full bg-gray-200 hover:bg-twiter hover:text-white transition duration-300"><i class="p-2 fab fa-twitter"></i></p></a>
+        </div>
+      </div>
+    </footer>
+    <!--######################################################################-->
+    <!--######################################################################-->
+</body>
+</html>
+

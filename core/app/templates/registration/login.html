@@ -1,0 +1,75 @@
+{% load static tailwind_tags %}
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!--######################################################################-->
+    <!-- Webpage/Metadas ==================================================== -->
+    <title>MyLifeTravel</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon.ico' %}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="MyLifeTravel">
+    <meta name="description" content="¡Turismo Colombia!">
+    <meta name="keywords" content="">
+    <!--######################################################################-->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- FontAwensome/Tailwind ==================================================== -->
+    {% tailwind_css %}
+    <link rel="stylesheet" href="{% static 'fonts/MikeSamiya-EadMr.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+</head>
+<body>
+    <!--######################################################################-->
+    <!--######################################################################-->
+    <section>
+        <div class="flex items-center justify-center bg-image-03 h-screen">
+            <form target="_self" method="POST">
+                {% csrf_token %}
+                <div class="flex flex-col justify-center bg-gray-100 rounded-lg items-center w-80 m-auto gap-4">
+                    <a href="/" class="flex flex-row items-center mt-8">
+                        <p><img src="{% static 'logo.webp' %}" alt="" class="w-12 h-12"></p>
+                        <p class="text-2xl font-samiya text-gray-800">MyLifeTravel</p>
+                    </a>
+                    {% if messages %}
+                    <div class="{{ message.tags }}">
+                        <ul class="ul-messages text-xs items-center text-center">
+                        {% for message in messages %}
+                            <p {% if message.tags %} class="font-bold {{ message.tags }} {{ message.extra_tags }}"{% endif %}>{{ message }}</p>
+                        {% endfor %}
+                        </ul>
+                    </div>
+                    {% else %}
+                        <div style="height: 32px;"></div>
+                    {% endif %}
+                    <div class="relative">
+                        <input type="username" name="username" placeholder="Usuario" class="pl-10 py-2 pr-4 border-none" />
+                        <i class="fas fa-user absolute left-3 top-3 text-gray-600"></i>
+                    </div>
+                    <div class="relative text-sm">
+                        <input type="password" name="password" placeholder="Contraseña" class="pl-10 py-2 pr-4 border-none" />
+                        <i class="fas fa-lock absolute left-3 top-3 text-gray-600"></i>
+                    </div>
+                    <input type="submit" class="w-56 h-8 bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-r hover:from-purple-600 hover:to-pink-600 transition duration-300 px-2 rounded-full text-white text-sm font-semibold cursor-pointer" value='INGRESAR'>
+                    <div class="flex flex-row gap-3 my-4 text-white">
+                        <p class="w-10 h-10 flex justify-center items-center rounded-full bg-facebook text-lg hover:bg-gray-800"><i class="p-2 fab fa-facebook-f"></i></p>
+                        <p class="w-10 h-10 flex justify-center items-center rounded-full bg-google text-lg hover:bg-gray-800"><i class="p-2 fab fa-google"></i></p>
+                        <p class="w-10 h-10 flex justify-center items-center rounded-full bg-twiter text-lg hover:bg-gray-800"><i class="p-2 fab fa-twitter"></i></p>
+                    </div>
+                    <div class="flex flex-col mt-4 mb-8 justify-center text-sm text-center text-gray-800 font-semibold">
+                        <a href="{% url 'singup' %}" class="transition-colors duration-200 hover:text-green-800">¿No Eres Miembro? Regístrate</a>
+                        <a href="{% url 'ComingSoon' %}" class="transition-colors duration-200 hover:text-green-800">¿Olvidaste la Contraseña?</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+    <!--######################################################################-->
+    <!--######################################################################-->
+</body>
+</html>
+

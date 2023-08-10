@@ -1,0 +1,201 @@
+{% load static tailwind_tags %}
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!--######################################################################-->
+    <!-- Webpage/Metadas ==================================================== -->
+    <title>MyLifeTravel</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon.ico' %}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="MyLifeTravel">
+    <meta name="description" content="¡Turismo Colombia!">
+    <meta name="keywords" content="">
+    <!--######################################################################-->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- FontAwensome/Tailwind ==================================================== -->
+    {% tailwind_css %}
+    <link rel="stylesheet" href="{% static 'fonts/MikeSamiya-EadMr.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+</head>
+<body>
+    <!--######################################################################-->
+    <!-- Header/section ==================================================== -->
+    <header>
+      <nav class="absolute top-0 left-0 right-0 z-10">
+        <div class="w-full flex flex-row items-center justify-between px-12 py-2 bg-gradient-to-b from-blue-200 to-white">
+          <div class="flex flex-row items-center">
+            <a href="/"><img src="{% static 'img/icon.png' %}" alt="" class="w-12 h-12"></a>
+            <p class="text-2xl font-samiya text-gray-600">My LifeTravel</p>
+          </div>
+          <div class="text-gray-600 uppercase font-bold">
+            <ul class="flex space-x-8">
+              <li ><a href="{% url 'index' %}">Inicio</a></li>
+              {% if user.is_authenticated %}
+                <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
+                <li ><a href="{% url 'booking' %}">Reservas</a></li>
+                <li ><a href="{% url 'logout' %}">Salir</a></li>
+              {% else %}
+                <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
+                <li ><a href="{% url 'login' %}">Ingresar</a></li>
+              {% endif %}
+              </ul>
+            </div>
+        </div>
+      </nav>
+    </header>
+    <!--######################################################################-->
+    <!-- Content/section =====================================================-->
+    <section>
+      {% if iHotel %}
+        <p class="text-center text-4xl mt-24 font-samiya text-rgb1 uppercase">{{iTitle|default:"Catalogo"}}</p>
+        <p class="text-center my-4">¡Imperdibles centros vacacionales!</p>
+        <div class="flex flex-wrap justify-center">
+          {% for i in iHotel %}
+          <div class="flex flex-col m-10 shadow-gray-800 shadow-lg bg-none rounded-b-md">
+            <a class="imgover" href="{% url 'info-hotel' hCode=i.hCode %}">
+              <img class="object-cover rounded-t-md h-80 card_img" src="{{i.hBanner.url}}" alt="">
+            </a>
+            <div class="justify-between rounded-b-md py-4 bg-slate-900 text-sm text-gray-200 font-family px-5">
+              <div class="flex flex-row justify-between">
+                <span class="uppercase font-semibold">{{i.hHotel}}</span>
+                <span>{{i.hCode}}<i class="fa-solid fa-barcode ml-2"></i></span>
+              </div>
+              <div class="flex flex-row justify-between mt-2">
+                <a target="blank" href="{{i.hMap}}"><i class="fas fa-map-marker-alt pr-2 text-orange-400"></i>{{i.hLocation}}</a>
+                <span>{{i.hValue|intcomma}} $COP</span>
+              </div>
+              <form target="_self" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{i.id}}">
+                <p class="flex justify-center items-center bg-gradient-to-r from-rgb1 to-rgb3 rounded-full text-white text-sm font-semibold py-1 mt-2">
+                  {% if user.is_authenticated %}
+                    <input type="submit" class="cursor-pointer w-full" value='SOLICITAR'>
+                  {% else %}
+                    <a href="{% url 'login' %}">INGRESAR</a>
+                  {% endif %}
+                </p>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <nav class="flex items-center justify-center w-full text-center mb-4 gap-x-4">
+          {% if iHotel.has_previous %}
+          <li class="inline-block"><a class="pagination-button bg-gray-200"
+              href="?page={{ iHotel.previous_page_number }}">&laquo;</a>
+          </li>
+          {% else %}
+          <li class="inline-block"><a class="pagination-button bg-gray-200"
+              href="">&laquo;</a>
+          </li>
+          {% endif %}
+          {% for page in iHotel.paginator.page_range %}
+          {% if page == iHotel.number %}
+          <li class="inline-block"><a class="pagination-button bg-gray-400"
+              href="">{{ page }}</a>
+          </li>
+          {% else %}
+          <li class="inline-block"><a class="pagination-button bg-gray-200"
+              href="?page={{ page }}">{{ page }}</a>
+          </li>
+          {% endif %}
+          {% endfor %}
+          {% if iHotel.has_next %}
+          <li class="inline-block"><a class="pagination-button bg-gray-200"
+              href="?page={{ iHotel.next_page_number }}">&raquo;</a>
+          </li>
+          {% else %}
+          <li class="inline-block"><a class="pagination-button bg-gray-200"
+              href="">&raquo;</a>
+          </li>
+          {% endif %}
+        </nav>
+      {% endif %}
+      <!--######################################################################-->
+      <!--###########--><hr class="mt-10 mx-10 divider gradient"><!--###########-->
+      <!--######################################################################-->
+      {% if iTours %}
+        <p class="text-center text-4xl mt-8 font-samiya text-rgb1 my-4 uppercase">¡Tours!</p>
+        <p class="text-center my-4">¡Imperdibles destinos turisticos Nacionales!</p>
+        <div class="flex flex-wrap justify-center">
+          {% for i in iTours %}
+          <div class="flex flex-col m-10">
+            <a class="imgover" href="{% url 'info-tours' tCode=i.tCode %}">
+              <img class="object-cover rounded-t-md h-80 card_img" src="{{i.tBanner.url}}" alt="">
+            </a>
+            <div class="justify-between rounded-b-md py-4 bg-slate-900 text-sm text-gray-200 font-family px-5">
+              <div class="flex flex-row justify-between">
+                <span>{{i.tTour}}</span>
+                <span>{{i.tCode}}<i class="fa-solid fa-barcode ml-2"></i></span>
+              </div>
+              <div class="flex flex-row justify-between mt-2">
+                <a target="blank" href="{{i.tMap}}"><i class="fas fa-map-marker-alt pr-2 text-orange-400"></i>{{i.tLocation}}</a>
+                <span>{{i.tValue|intcomma}} $COP</span>
+              </div>
+              <form target="_self" method="POST">
+                {% csrf_token %}
+                <input type="hidden" name="id" value="{{i.id}}">
+                <p class="flex justify-center items-center bg-gradient-to-r from-rgb1 to-rgb3 rounded-full text-white text-sm font-semibold py-1 mt-2">
+                  {% if user.is_authenticated %}
+                    <input type="submit" class="cursor-pointer w-full" value='SOLICITAR'>
+                  {% else %}
+                    <a href="{% url 'login' %}">INGRESAR</a>
+                  {% endif %}
+                </p>
+              </form>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </section>
+    <!--######################################################################-->
+    <!--###########--><hr class="mt-10 mx-10 divider gradient"><!--###########-->
+    <!-- Footer/section ===================================================== -->
+    <footer>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 items-center bg-neutral-800 py-2 px-8">
+        <div class="flex flex-row">
+          <img src="{% static 'logo.webp' %}" class="h-16" />
+          <div class="flex flex-col justify-center">
+            <p class="text-gray-200 text-left ml-4">MyLifeTravel</p>
+            <p class="text-gray-400 text-left ml-4 text-xs">{{Settings.sEmail}}</p>
+          </div>
+        </div>
+        <div class="flex flex-row gap-4 items-center">
+          <div class="flex flex-col text-xs">
+            <p class="text-gray-200 uppercase">Contactanos</p>
+            <p class="text-gray-400">WhatsApp: {{Settings.sTel}}</p>
+          </div>
+          <div>
+            <a href="https://wa.me/{{Settings.sIdx}}{{Settings.sTel}}" target="_blank" class="bg-gray-500 hover:bg-gray-600 text-gray-200 font-bold py-2 px-4 rounded-md text-xs max-w-fit">CHAT</a>
+          </div>
+        </div>
+        <div class="flex flex-row gap-4 whitespace-nowrap items-center">
+          <div class="flex flex-col text-xs">
+            <p class="text-gray-200 uppercase">Atencion</p>
+            <p class="text-gray-400 text-left text-xs">Lunes-Sabado {{Settings.sTime1|time:"g"}}-{{Settings.sTime2|time:"g"}}pm</p>
+          </div>
+          <div class="text-gray-400 text-left text-xs">
+            <p>Jornada Continua</p>
+            <p>{{Settings.sAddress}}</p>
+          </div>
+        </div>
+        <div class="flex flex-row items-center space-x-2 justify-end">
+          <a href="{{Settings.sURL2}}" target="_blank"><p class="w-8 h-8 rounded-full bg-gray-200 hover:bg-facebook hover:text-white transition duration-300"><i class="p-2 fab fa-facebook"></i></p></a>
+          <a href="{{Settings.sURL1}}" target="_blank"><p class="w-8 h-8 rounded-full bg-gray-200 hover:bg-instagram hover:text-white transition duration-300"><i class="p-2 fab fa-instagram"></i></p></a>
+          <a href="{{Settings.sURL3}}" target="_blank"><p class="w-8 h-8 rounded-full bg-gray-200 hover:bg-twiter hover:text-white transition duration-300"><i class="p-2 fab fa-twitter"></i></p></a>
+        </div>
+      </div>
+    </footer>
+    <!--######################################################################-->
+    <!--######################################################################-->
+    <script src="{% static 'js/navbar.js' %}"></script>
+</body>
+</html>
+

@@ -5,6 +5,9 @@ from django.conf.locale.es import formats as es_formats
 from django.contrib.auth.admin import UserAdmin
 from django.db import models
 
+from django_google_maps import widgets as map_widgets
+from django_google_maps import fields as map_fields
+
 import app.models as model
 
 class HotelFilesInline(admin.StackedInline):    
@@ -14,6 +17,7 @@ class HotelBookingInline(admin.StackedInline):
     model = model.HotelBooking
 
     fBooking = {"fields": (
+        "Account",
         ("iDateBooking","eDateBooking"),
         )}
 
@@ -100,6 +104,7 @@ class HotelsAdmin(admin.ModelAdmin):
     
     inlines = [HotelFilesInline,HotelBookingInline]
     
+    
     list_display = (
         "hCode",
         "hHotel",
@@ -110,7 +115,7 @@ class HotelsAdmin(admin.ModelAdmin):
         )
 
     fConfig = {"fields": (
-        ("hHotel","hCode"),
+        ("hHotel","hCode","IsActive"),
         ("hLocation","hMap"),
         ("hType","hValue"),
         "hBanner"
@@ -118,7 +123,12 @@ class HotelsAdmin(admin.ModelAdmin):
 
     fInfo = {"fields": (
         ("hRooms","hUsers"),
-        ("hWifi","hTV","hSound","hPool","hBBQ","hEcological")
+        ("hWifi","hTV","hPool","hGames")
+        )}
+
+    fLocation = {"fields": (
+        "address",
+        "geolocation"
         )}
 
     fText = {"fields": (
@@ -129,17 +139,18 @@ class HotelsAdmin(admin.ModelAdmin):
     fieldsets = (
         ("Configuracion", fConfig),
         ("Caracteristicas", fInfo),
+        ("Localizacion", fLocation),
         ("Informacion", fText),
         )
 
     list_filter = ["hLocation","IsActive"]
-    search_fields = ['hHotel']
+    search_fields = ['hCode']
 
     es_formats.DATETIME_FORMAT = "d M Y"
     radio_fields = {'hType': admin.HORIZONTAL}
 
     formfield_overrides = {
-        models.TextField: {'widget': CKEditorWidget()},
+        map_fields.AddressField: {'widget': map_widgets.GoogleMapsAddressWidget},
     }
 
 class ToursAdmin(admin.ModelAdmin):
@@ -296,11 +307,17 @@ class SettingsAdmin(admin.ModelAdmin):
         "sImg3",
         )}
 
+    fViews = {"fields": (
+        ("sHViews","sGViews","sTViews",),
+        )}
+
+
     fieldsets = (
         ("Configuracion", fConfig),
         ("Social", fSocial),
         ("Horarios Atencion", fTimes),
-        ("Imagenes", fMedia)
+        #("Imagenes", fMedia),
+        ("Vistas", fViews)
         )
 
 ##########################################################################
@@ -313,9 +330,9 @@ AdminSite.site_header = "MYLIFETRAVEL"
 
 #admin.site.register(model.Account, UserAuthAdmin)
 admin.site.register(model.Hotels, HotelsAdmin)
-admin.site.register(model.News, NewsAdmin)
+#admin.site.register(model.News, NewsAdmin)
 admin.site.register(model.Tours, ToursAdmin)
-admin.site.register(model.SubscribedEmails, SubscribedEmailsAdmin)
-admin.site.register(model.Information, InformationAdmin)
+#admin.site.register(model.SubscribedEmails, SubscribedEmailsAdmin)
+#admin.site.register(model.Information, InformationAdmin)
 admin.site.register(model.Settings, SettingsAdmin)
 

@@ -24,13 +24,20 @@ load_dotenv()
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+
 SECRET_KEY = os.getenv('SECRET_KEY')
+GOOGLE_MAPS_API_KEY = 'AIzaSyDWqVKjRK3fOlE5kqcjrEPCN4zwejZpviE'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
+
+TAILWIND_APP_NAME = 'theme'
 
 # Application definition
 
@@ -43,6 +50,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'ckeditor',
+    'tailwind',
+    'theme',
+    'django_google_maps',
+    'django_browser_reload',
     'app.apps.appConfig',
 ]
 
@@ -54,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django_browser_reload.middleware.BrowserReloadMiddleware",
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -122,6 +134,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+
+# URLs -->LOGIN/LOGOUT
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/

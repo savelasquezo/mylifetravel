@@ -4,6 +4,8 @@ from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
+from django_google_maps import fields as map_fields
+
 lst_sts = (('g','Glamping'),('i','Inmueble'))
 
 def CustomUploadToHotel(instance, filename):
@@ -28,8 +30,12 @@ class Hotels(models.Model):
     
     hHotel = models.CharField(_("Nombre"), max_length=64, blank=False, null=False)
     hLocation = models.CharField(_("Ubicacion"), max_length=64, blank=False, null=False)
+
     hMap = models.URLField(_("MAP"), max_length=512, blank=True, null=True, default="https://www.google.com/maps/search/",
         help_text="URL Ubicacion del Inmueble https://www.google.com/maps/search/?api=1&query=40.712776,-74.005974")
+
+    address = map_fields.AddressField(max_length=200)
+    geolocation = map_fields.GeoLocationField(max_length=100)
 
     hType = models.CharField(_("Caracteristica"),choices=lst_sts, max_length=64)
     hValue = models.IntegerField(_("Valor"),blank=True, null=True, default=0,
@@ -47,12 +53,10 @@ class Hotels(models.Model):
     hRooms = models.SmallIntegerField(_("Habitaciones"),blank=True, null=True, default=1)
     hUsers = models.SmallIntegerField(_("Capacidad"),blank=True, null=True, default=1)
 
-    hWifi = models.BooleanField(_("Wifi"), default=True)
-    hTV = models.BooleanField(_("TV"), default=True)
-    hSound = models.BooleanField(_("Sonido"), default=True)
-    hPool = models.BooleanField(_("Piscina"), default=True)
-    hBBQ = models.BooleanField(_("BBQ"), default=True)
-    hEcological = models.BooleanField(_("Senderismo"), default=True)
+    hWifi = models.CharField(_("Wifi"), blank=True, null=True, help_text="Ejemplo: 200M")
+    hTV = models.CharField(_("TV"), blank=True, null=True, help_text="Ejemplo: Smart4K 60'")
+    hPool =  models.CharField(_("Zonas Humedas"), blank=True, null=True, help_text="Ejemplo: Olímpica/Jacuzzi")
+    hGames = models.CharField(_("Juegos"), blank=True, null=True, help_text="Ejemplo: Futbol/Basquetball")
 
     IsActive = models.BooleanField(_("¿Activo?"), default=True)
 
@@ -79,6 +83,7 @@ class HotelFiles(models.Model):
 
 class HotelBooking(models.Model):
     hHotel = models.ForeignKey(Hotels, on_delete=models.CASCADE)
+    Account = models.ForeignKey(Account, on_delete=models.CASCADE)
     iDateBooking = models.DateField(_("Inicia"),auto_now=False,auto_now_add=False)
     eDateBooking = models.DateField(_("Finaliza"),auto_now=False,auto_now_add=False)
 
@@ -255,6 +260,9 @@ class Settings(models.Model):
     sImg3 = models.ImageField(_("Glampings"), upload_to="media/index/settings/", height_field=None, width_field=None, max_length=64, blank=True, null=True,
         help_text="360px-Width 280px-Height")
 
+    sHViews = models.BigIntegerField(null=True,blank=True)
+    sGViews = models.BigIntegerField(null=True,blank=True)
+    sTViews = models.BigIntegerField(null=True,blank=True)
 
     IsActive = models.BooleanField(_("¿Activo?"), default=True, unique=True)
 
