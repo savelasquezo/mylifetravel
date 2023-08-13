@@ -29,7 +29,7 @@ class Hotels(models.Model):
     hCode = models.CharField(_("Codigo"), max_length=32, unique=False)
     
     hHotel = models.CharField(_("Nombre"), max_length=64, blank=False, null=False)
-    hLocation = models.CharField(_("Ubicacion"), max_length=64, blank=False, null=False)
+    hLocation = models.CharField(_("Ciudad"), max_length=64, blank=False, null=False)
 
     hMap = models.URLField(_("MAP"), max_length=512, blank=True, null=True, default="https://www.google.com/maps/search/",
         help_text="URL Ubicacion del Inmueble https://www.google.com/maps/search/?api=1&query=40.712776,-74.005974")
@@ -70,7 +70,7 @@ class Hotels(models.Model):
 class HotelFiles(models.Model):
     hHotel = models.ForeignKey(Hotels, on_delete=models.CASCADE)
     hFiles = models.ImageField(_("Imagenes"), upload_to=CustomUploadToHotel, height_field=None, width_field=None, max_length=64,
-        help_text="Height/Width 1x")
+        help_text="Ancho[640px]-Alto[480px]")
 
 
     def __str__(self):
@@ -145,7 +145,7 @@ class ToursFiles(models.Model):
     tTour = models.ForeignKey(Tours, on_delete=models.CASCADE)
     
     tFiles = models.ImageField(_("Imagenes"), upload_to=CustomUploadToTours, height_field=None, width_field=None, max_length=64,
-        help_text="Height/Width 1x")
+        help_text="Ancho[640px]-Alto[480px]")
 
 
     def __str__(self):

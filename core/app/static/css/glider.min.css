@@ -114,13 +114,13 @@
   background: #1e1e1e;
 }
 
-.carousel__miniatura {
+.glider__miniatura {
   width: 64px;
   height: 48px;
   transition: transform 0.3s ease;
 }
 
-.carousel__miniatura.active {
+.glider__miniatura.active {
   transform: scale(1.1); /* Aplica el efecto de escala del 110% al hacer clic */
 }
 

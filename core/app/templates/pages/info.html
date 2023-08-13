@@ -43,14 +43,15 @@
           <div class="text-gray-600 uppercase font-bold">
             <ul class="flex space-x-8">
               <li ><a href="{% url 'index' %}">Inicio</a></li>
-              {% if user.is_authenticated %}
+              <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
+              <!--{% if user.is_authenticated %}
                 <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
                 <li ><a href="{% url 'booking' %}">Reservas</a></li>
                 <li ><a href="{% url 'logout' %}">Salir</a></li>
               {% else %}
                 <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
                 <li ><a href="{% url 'login' %}">Ingresar</a></li>
-              {% endif %}
+              {% endif %}-->
               </ul>
             </div>
         </div>
@@ -59,23 +60,17 @@
     <!--######################################################################-->
     <!-- Content/section =====================================================-->
     <section>
-        <div class="flex flex-row justify-start items-start mt-24 px-32 gap-2 overflow-hidden h-[90vh]">
-            <div class="carousel w-7/12 h-full">
+        <div class="flex flex-row justify-start items-start mt-24 px-32 overflow-hidden h-[35rem]">
+            <div class="w-7/12 h-full">
                 <hr class="w-full h-1 bg-gray-300 my-1">
-                <div class="flex flex-col justify-center items-center w-full">
-                    <div class="carousel__lista overflow-hidden w-full h-full">
-                        {% if hCode %}
-                            {% for i in fHotel %}
-                            <div class="">
-                                <img class="h-full w-full" src="{{i.hFiles.url}}">
-                            </div>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                    <div class="carousel__miniaturas w-full mt-1 object-cover flex flex-row justify-start items-center gap-2 cursor-pointer overflow-scroll overflow-y-hidden"></div>
+                <div class="glider-slide flex flex-col items-start w-auto h-[30rem]">
+                    {% for i in fHotel %}
+                        <img class="h-screen w-screen object-fill" src="{{i.hFiles.url}}" alt="">
+                    {% endfor %}
                 </div>
+                <div class="glider__miniaturas mt-1 flex flex-row justify-start items-center gap-2 cursor-pointer overflow-scroll overflow-y-hidden"></div>
             </div>
-            <div class="flex flex-col w-5/12 h-full border-b-2 justify-between">
+            <div class="flex flex-col w-5/12 h-full justify-between px-1">
                 <div class="flex flex-col">
                     <hr class="w-full h-1 bg-gray-300 my-1">
                     <div class=" text-gray-600 font-semibold p-8 h-full bg-gray-100">
@@ -105,7 +100,7 @@
                     </div>
                 </div>
                 <div class="bg-gray-100 h-full w-full flex items-end">
-                    <a class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm transition-colors duration-300 m-4 uppercase cursor-pointer text-center"
+                    <a target="_blank" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm transition-colors duration-300 m-4 uppercase cursor-pointer text-center"
                         href="https://wa.me/{{Settings.sIdx}}{{Settings.sTel}}?text=Hola%20MyLifeTravel!%0A¡Necesito%20mas%20Informaci%C3%B3n%20del%20Inmueble%20{{hHotel.hCode}}!">
                         Solicitar
                     </a>
@@ -178,26 +173,26 @@
             <img src="{% static 'logo.webp' %}" class="h-16" />
             <div class="flex flex-col justify-center">
               <p class="text-gray-200 text-left ml-4">MyLifeTravel</p>
-              <p class="text-gray-400 text-left ml-4 text-xs">{{Settings.sEmail}}</p>
+              <p class="text-gray-400 text-left ml-4 text-xs">{{Settings.sEmail|default:"mail@mail.com"}}</p>
             </div>
           </div>
           <div class="flex flex-row gap-4 items-center">
             <div class="flex flex-col text-xs">
               <p class="text-gray-200 uppercase">Contactanos</p>
-              <p class="text-gray-400">WhatsApp: {{Settings.sTel}}</p>
+              <p class="text-gray-400">WhatsApp: {{Settings.sTel|default:"30000000000"}}</p>
             </div>
             <div>
-              <a href="https://wa.me/{{Settings.sIdx}}{{Settings.sTel}}" target="_blank" class="bg-gray-500 hover:bg-gray-600 text-gray-200 font-bold py-2 px-4 rounded-md text-xs max-w-fit">CHAT</a>
+              <a target="_blank" href="https://wa.me/{{Settings.sIdx}}{{Settings.sTel}}" class="bg-gray-500 hover:bg-gray-600 text-gray-200 font-bold py-2 px-4 rounded-md text-xs max-w-fit">CHAT</a>
             </div>
           </div>
           <div class="flex flex-row gap-4 whitespace-nowrap items-center">
             <div class="flex flex-col text-xs">
               <p class="text-gray-200 uppercase">Atencion</p>
-              <p class="text-gray-400 text-left text-xs">Lunes-Sabado {{Settings.sTime1|time:"g"}}-{{Settings.sTime2|time:"g"}}pm</p>
+              <p class="text-gray-400 text-left text-xs">Lunes-Sabado {{Settings.sTime1|time:"g"|default:"0:00"}}-{{Settings.sTime2|time:"g"|default:"0:00"}}pm</p>
             </div>
             <div class="text-gray-400 text-left text-xs">
               <p>Jornada Continua</p>
-              <p>{{Settings.sAddress}}</p>
+              <p>{{Settings.sAddress|default:"Colombia"}}</p>
             </div>
           </div>
           <div class="flex flex-row items-center space-x-2 justify-end">
@@ -206,7 +201,7 @@
             <a href="{{Settings.sURL3}}" target="_blank"><p class="w-8 h-8 rounded-full bg-gray-200 hover:bg-twiter hover:text-white transition duration-300"><i class="p-2 fab fa-twitter"></i></p></a>
           </div>
         </div>
-      </footer>
+    </footer>
     <!--######################################################################-->
     <!--######################################################################-->
     <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>

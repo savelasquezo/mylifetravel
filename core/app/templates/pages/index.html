@@ -43,14 +43,15 @@
           <div class="text-gray-200 uppercase font-bold">
             <ul class="flex space-x-8">
               <li ><a href="{% url 'index' %}">Inicio</a></li>
-              {% if user.is_authenticated %}
+              <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
+              <!--{% if user.is_authenticated %}
                 <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
                 <li ><a href="{% url 'booking' %}">Reservas</a></li>
                 <li ><a href="{% url 'logout' %}">Salir</a></li>
               {% else %}
                 <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
                 <li ><a href="{% url 'login' %}">Ingresar</a></li>
-              {% endif %}
+              {% endif %}-->
             </ul>
           </div>
         </div>
@@ -81,7 +82,7 @@
           <p class="text-8xl font-samiya text-rgb1 text-center">My LifeTravel</p>
           <div class="flex flex-row uppercase gap-x-4 items-center mt-12 justify-start">
             <p class="">Una forma diferente de emprender un viaje</p>
-            <a href=https://wa.me/{{Settings.sIdx}}{{Settings.sTel}} target="_blank" class="rounded-full cursor-pointer bg-gray-600 transition duration-300 hover:bg-gray-800 text-gray-100 w-32 py-2 text-center uppercase">CONTACTAR</a>
+            <a target="_blank" href=https://wa.me/{{Settings.sIdx}}{{Settings.sTel}} class="rounded-full cursor-pointer bg-gray-600 transition duration-300 hover:bg-gray-800 text-gray-100 w-32 py-2 text-center uppercase">CONTACTAR</a>
           </div>
         </div>
       </div>
@@ -181,11 +182,12 @@
                       {% csrf_token %}
                       <input type="hidden" name="id" value="{{i.id}}">
                       <p class="flex justify-center items-center bg-gradient-to-r from-rgb1 to-rgb3 rounded-full text-white text-sm font-semibold py-2">
-                        {% if user.is_authenticated %}
+                        <a target="_blank" href="https://wa.me/{{Settings.sIdx}}{{Settings.sTel}}?text=Hola%20MyLifeTravel!%0A¡Necesito%20mas%20Informaci%C3%B3n%20del%20Inmueble%20{{i.hCode}}!">SOLICITAR</a>
+                        <!--{% if user.is_authenticated %}
                           <input type="submit" class="cursor-pointer w-full" value='SOLICITAR'>
                         {% else %}
                           <a href="{% url 'login' %}">INGRESAR</a>
-                        {% endif %}
+                        {% endif %}-->
                       </p>
                     </form>
                 </div>
@@ -223,26 +225,26 @@
           <img src="{% static 'logo.webp' %}" class="h-16" />
           <div class="flex flex-col justify-center">
             <p class="text-gray-200 text-left ml-4">MyLifeTravel</p>
-            <p class="text-gray-400 text-left ml-4 text-xs">{{Settings.sEmail}}</p>
+            <p class="text-gray-400 text-left ml-4 text-xs">{{Settings.sEmail|default:"mail@mail.com"}}</p>
           </div>
         </div>
         <div class="flex flex-row gap-4 items-center">
           <div class="flex flex-col text-xs">
             <p class="text-gray-200 uppercase">Contactanos</p>
-            <p class="text-gray-400">WhatsApp: {{Settings.sTel}}</p>
+            <p class="text-gray-400">WhatsApp: {{Settings.sTel|default:"30000000000"}}</p>
           </div>
           <div>
-            <a href="https://wa.me/{{Settings.sIdx}}{{Settings.sTel}}" target="_blank" class="bg-gray-500 hover:bg-gray-600 text-gray-200 font-bold py-2 px-4 rounded-md text-xs max-w-fit">CHAT</a>
+            <a target="_blank" href="https://wa.me/{{Settings.sIdx}}{{Settings.sTel}}" class="bg-gray-500 hover:bg-gray-600 text-gray-200 font-bold py-2 px-4 rounded-md text-xs max-w-fit">CHAT</a>
           </div>
         </div>
         <div class="flex flex-row gap-4 whitespace-nowrap items-center">
           <div class="flex flex-col text-xs">
             <p class="text-gray-200 uppercase">Atencion</p>
-            <p class="text-gray-400 text-left text-xs">Lunes-Sabado {{Settings.sTime1|time:"g"}}-{{Settings.sTime2|time:"g"}}pm</p>
+            <p class="text-gray-400 text-left text-xs">Lunes-Sabado {{Settings.sTime1|time:"g"|default:"0:00"}}-{{Settings.sTime2|time:"g"|default:"0:00"}}pm</p>
           </div>
           <div class="text-gray-400 text-left text-xs">
             <p>Jornada Continua</p>
-            <p>{{Settings.sAddress}}</p>
+            <p>{{Settings.sAddress|default:"Colombia"}}</p>
           </div>
         </div>
         <div class="flex flex-row items-center space-x-2 justify-end">

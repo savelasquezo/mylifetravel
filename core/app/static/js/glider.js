@@ -1,11 +1,11 @@
-var slider = new Glider(document.querySelector('.carousel__lista'), {
+var slider = new Glider(document.querySelector('.glider-slide'), {
     slidesToScroll: 1,
     slidesToShow: 1,
     draggable: false,
     scrollLock: true,
 });
 
-slideAutoPlay(slider, '.carousel__lista');
+slideAutoPlay(slider, '.glider-slide');
 
 function slideAutoPlay(glider, selector, delay = 4500, repeat = true) {
     let autoplay = null;
@@ -44,14 +44,14 @@ function slideAutoPlay(glider, selector, delay = 4500, repeat = true) {
     }, 300);
 }
 
-const thumbnailsContainer = document.querySelector('.carousel__miniaturas');
-const slides = document.querySelectorAll('.carousel__lista img');
+const thumbnailsContainer = document.querySelector('.glider__miniaturas');
+const slides = document.querySelectorAll('.glider-slide img');
 
 
 slides.forEach((slide, index) => {
     const thumbnail = document.createElement('img');
     thumbnail.src = slide.src;
-    thumbnail.classList.add('carousel__miniatura');
+    thumbnail.classList.add('glider__miniatura');
     thumbnailsContainer.appendChild(thumbnail);
 
     thumbnail.addEventListener('click', () => {

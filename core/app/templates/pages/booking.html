@@ -37,14 +37,15 @@
           <div class="text-gray-600 uppercase font-bold">
             <ul class="flex space-x-8">
               <li ><a href="{% url 'index' %}">Inicio</a></li>
-              {% if user.is_authenticated %}
+              <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
+              <!--{% if user.is_authenticated %}
                 <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
                 <li ><a href="{% url 'booking' %}">Reservas</a></li>
                 <li ><a href="{% url 'logout' %}">Salir</a></li>
               {% else %}
                 <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
                 <li ><a href="{% url 'login' %}">Ingresar</a></li>
-              {% endif %}
+              {% endif %}-->
               </ul>
             </div>
         </div>
@@ -144,26 +145,26 @@
           <img src="{% static 'logo.webp' %}" class="h-16" />
           <div class="flex flex-col justify-center">
             <p class="text-gray-200 text-left ml-4">MyLifeTravel</p>
-            <p class="text-gray-400 text-left ml-4 text-xs">{{Settings.sEmail}}</p>
+            <p class="text-gray-400 text-left ml-4 text-xs">{{Settings.sEmail|default:"mail@mail.com"}}</p>
           </div>
         </div>
         <div class="flex flex-row gap-4 items-center">
           <div class="flex flex-col text-xs">
             <p class="text-gray-200 uppercase">Contactanos</p>
-            <p class="text-gray-400">WhatsApp: {{Settings.sTel}}</p>
+            <p class="text-gray-400">WhatsApp: {{Settings.sTel|default:"30000000000"}}</p>
           </div>
           <div>
-            <a href="https://wa.me/{{Settings.sIdx}}{{Settings.sTel}}" target="_blank" class="bg-gray-500 hover:bg-gray-600 text-gray-200 font-bold py-2 px-4 rounded-md text-xs max-w-fit">CHAT</a>
+            <a target="_blank" href="https://wa.me/{{Settings.sIdx}}{{Settings.sTel}}" class="bg-gray-500 hover:bg-gray-600 text-gray-200 font-bold py-2 px-4 rounded-md text-xs max-w-fit">CHAT</a>
           </div>
         </div>
         <div class="flex flex-row gap-4 whitespace-nowrap items-center">
           <div class="flex flex-col text-xs">
             <p class="text-gray-200 uppercase">Atencion</p>
-            <p class="text-gray-400 text-left text-xs">Lunes-Sabado {{Settings.sTime1|time:"g"}}-{{Settings.sTime2|time:"g"}}pm</p>
+            <p class="text-gray-400 text-left text-xs">Lunes-Sabado {{Settings.sTime1|time:"g"|default:"0:00"}}-{{Settings.sTime2|time:"g"|default:"0:00"}}pm</p>
           </div>
           <div class="text-gray-400 text-left text-xs">
             <p>Jornada Continua</p>
-            <p>{{Settings.sAddress}}</p>
+            <p>{{Settings.sAddress|default:"Colombia"}}</p>
           </div>
         </div>
         <div class="flex flex-row items-center space-x-2 justify-end">
