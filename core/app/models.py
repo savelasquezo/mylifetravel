@@ -107,6 +107,9 @@ class Tours(models.Model):
     tMap = models.URLField(_("MAP"), max_length=512, blank=True, null=True, default="https://www.google.com/maps/search/",
         help_text="URL Ubicacion del Tour https://www.google.com/maps/search/?api=1&query=40.712776,-74.005974")
 
+    address = map_fields.AddressField(max_length=200)
+    geolocation = map_fields.GeoLocationField(max_length=100)
+
     tBanner = models.ImageField(_("Miniatura"), height_field=None, width_field=None, max_length=64,
         upload_to="media/index/banner/tours", help_text="300px-Width 300px-Height")
 
@@ -123,12 +126,10 @@ class Tours(models.Model):
     tDeltaTime = models.SmallIntegerField(_("Duracion"),blank=True, null=True, default=1,
         help_text="Duracion del Recorrido (Dias)")
     
-    tHotel = models.BooleanField(_("Alojamiento"), default=True)
-    tTransport = models.BooleanField(_("Transporte"), default=True)
-    tFood = models.BooleanField(_("Comida"), default=True)
-    tGuie = models.BooleanField(_("Guia"), default=True)
-    tPools = models.BooleanField(_("Zona Humeda"), default=True)
-    tEcological = models.BooleanField(_("Senderismo"), default=True)
+    tHotel = models.CharField(_("Alojamiento"), blank=True, null=True, max_length=64, help_text="Hostal")
+    tTransport = models.CharField(_("Transporte"), blank=True, null=True, max_length=64, help_text="Bus Emperador")
+    tFood = models.CharField(_("Alimentacion"), blank=True, null=True, max_length=64, help_text="Desayuno/Refrigerio")
+    tGuie = models.CharField(_("Guia"), blank=True, null=True, max_length=64, help_text="Tour Guiado")
 
     IsActive = models.BooleanField(_("¿Activo?"), default=True)
 

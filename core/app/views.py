@@ -137,7 +137,7 @@ class GalleryGroupView(TemplateView):
         return self.render_to_response(context)
 
 class InfoHotelView(TemplateView):
-    template_name='pages/info.html'
+    template_name='pages/info/hotels.html'
     
     def get(self, request, *args, **kwargs):
 
@@ -158,20 +158,21 @@ class InfoHotelView(TemplateView):
         return self.render_to_response(context)
 
 class InfoToursView(TemplateView):
-    template_name='pages/info.html'
+    template_name='pages/info/tours.html'
 
     
     def get(self, request, *args, **kwargs):
 
         rCode = self.kwargs.get('tCode')
-        if model.Tours.objects.get(tCode=rCode):
-            fTours = model.ToursFiles.objects.filter(tTour__tCode=rCode)
-            iTours = fTours.first()
+        tTour =  model.Tours.objects.get(tCode=rCode)
+
+        if tTour:
+            fTour = model.ToursFiles.objects.filter(tTour__tCode=rCode)
 
         context = super().get_context_data(**kwargs)
         context.update({
-            'fTours': fTours,
-            'iTours': iTours,
+            'fTour': fTour,
+            'tTour': tTour,
         })
         return self.render_to_response(context)
 

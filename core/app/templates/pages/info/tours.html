@@ -1,0 +1,213 @@
+{% load static tailwind_tags %}
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <!--######################################################################-->
+    <!-- Webpage/Metadas ==================================================== -->
+    <title>MyLifeTravel</title>
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'favicon.ico' %}">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="MyLifeTravel">
+    <meta name="description" content="¡Turismo Colombia!">
+    <meta name="keywords" content="">
+    <!--######################################################################-->
+    <link rel="stylesheet" href="{% static 'css/tailwind.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- FontAwensome/Tailwind ============================================== -->
+    {% tailwind_css %}
+    <link rel="stylesheet" href="{% static 'fonts/MikeSamiya-EadMr.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+    <!-- Glider ============================================================== -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/glider.min.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/glider.min.js' %}"></script>
+    <!-- GoogleMaps ========================================================== -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDWqVKjRK3fOlE5kqcjrEPCN4zwejZpviE&callback=initMap&v=weekly" defer></script>
+</head>
+<body>
+    <!--######################################################################-->
+    <!-- Header/section ==================================================== -->
+    <header>
+      <nav class="absolute top-0 left-0 right-0 z-10">
+        <div class="w-full flex flex-row items-center justify-between px-12 py-2 bg-gradient-to-b from-blue-200 to-white">
+          <div class="flex flex-row items-center">
+            <a href="/"><img src="{% static 'img/icon.png' %}" alt="" class="w-12 h-12"></a>
+            <p class="text-2xl font-samiya text-gray-600">My LifeTravel</p>
+          </div>
+          <div class="text-gray-600 uppercase font-bold">
+            <ul class="flex space-x-8">
+              <li ><a href="{% url 'index' %}">Inicio</a></li>
+              <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
+              <!--{% if user.is_authenticated %}
+                <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
+                <li ><a href="{% url 'booking' %}">Reservas</a></li>
+                <li ><a href="{% url 'logout' %}">Salir</a></li>
+              {% else %}
+                <li ><a href="{% url 'gallery' %}">Catalogo</a></li>
+                <li ><a href="{% url 'login' %}">Ingresar</a></li>
+              {% endif %}-->
+              </ul>
+            </div>
+        </div>
+      </nav>
+    </header>
+    <!--######################################################################-->
+    <!-- Content/section =====================================================-->
+    <section>
+        <div class="flex flex-row justify-start items-start mt-24 px-32 overflow-hidden h-[35rem]">
+            <div class="w-7/12 h-full">
+                <hr class="w-full h-1 bg-gray-300 my-1">
+                <div class="glider-slide flex flex-col items-start w-auto h-[30rem]">
+                    {% for i in fTour %}
+                        <img class="h-screen w-screen object-fill" src="{{i.tFiles.url}}" alt="">
+                    {% endfor %}
+                </div>
+                <div class="glider__miniaturas mt-1 flex flex-row justify-start items-center gap-2 cursor-pointer overflow-scroll overflow-y-hidden"></div>
+            </div>
+            <div class="flex flex-col w-5/12 h-full justify-between px-1">
+                <div class="flex flex-col">
+                    <hr class="w-full h-1 bg-gray-300 my-1">
+                    <div class=" text-gray-600 font-semibold p-8 h-full bg-gray-100">
+                        <div class="flex flex-row items-center justify-between ">
+                            <div class="flex flex-col">
+                                <p class="uppercase text-lg">{{tTour.tTour}}</p>
+                                <p class="uppercase text-xs"><i class="fa-solid fa-barcode mr-1"></i>{{tTour.tCode}}</p>
+                            </div>
+                            <span class="text-green-700 text-2xl">${{tTour.tValue|intcomma}}</span>
+                        </div><br>
+                        <p class="uppercase">{{tTour.tLocation}}</p>
+                        <p class="text-sm font-normal text-justify my-1">{{tTour.tText}}</p>
+                        <div id="gMap" class="w-full h-full my-4"></div>
+                        <script>
+                            let map;
+                            function initMap() {
+                                const ubicacion = "{{ tTour.geolocation }}";
+                                const [lat, lng] = ubicacion.split(',').map(coord => parseFloat(coord));
+                                map = new google.maps.Map(document.getElementById("gMap"), {
+                                    center: { lat: lat, lng: lng }, 
+                                    zoom: 10,
+                                    mapTypeControl: false,
+                                });
+                            }
+                            window.initMap = initMap;c%C3%B3digo
+                        </script>
+                    </div>
+                </div>
+                <div class="bg-gray-100 h-full w-full flex items-end">
+                    <a target="_blank" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-sm transition-colors duration-300 m-4 uppercase cursor-pointer text-center"
+                        href="https://wa.me/{{Settings.sIdx}}{{Settings.sTel}}?text=Hola%20MyLifeTravel!%0A¡Necesito%20mas%20Informaci%C3%B3n%20del%20Inmueble%20{{tTour.tCode}}!">
+                        Solicitar
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-row justify-start items-start px-32 gap-8 my-4 h-48 overflow-hidden">
+            <div class="flex flex-col w-7/12 overflow-hidden">
+                <hr class="w-full h-0.5 bg-gray-300 my-1">
+                <div class="h-40 bg-gray-100 border-b-2 p-2">
+                    <p class="uppercase text-gray-800 font-semibold text-lg border-l-8 border-gray-300 rounded-md pl-2">Descripcion</p>
+                    <p class="text-gray-800 my-2 overflow-hidden text-sm text-justify pr-4">{{tTour.tTextX}}</p>
+                </div>
+            </div>
+            <div class="flex flex-col w-5/12 text-gray-500">
+                <hr class="w-full h-0.5 bg-gray-300 my-1">
+                <div class="h-40 bg-gray-100 border-b-2 p-2">
+                    <p class="uppercase text-gray-800 font-semibold text-lg border-l-8 border-gray-300 rounded-md pl-2">Incluye</p>
+                    <div class="grid grid-cols-2 grid-rows-2 gap-x-6 gap-y-2 justify-start items-center my-2">
+                        <div class="flex flex-row items-center m-1">
+                            <i class="fa-solid fa-mattress-pillow text-2xl rotate-90 -ml-2"></i>
+                            <div class="flex flex-col px-1">
+                                <p class="uppercase text-sm font-semibold leading-tight text-gray-700">Alojamientos</p>
+                                <p class="text-xs leading-tight text-gray-500">
+                                    {% if tTour.tHotel %}{{tTour.tHotel}}
+                                    {% elif not tTour.tHotel %}N/A{% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex flex-row items-center">
+                            <i class="fa-solid fa-table-tennis-paddle-ball text-2xl"></i>
+                            <div class="flex flex-col px-1 m-1">
+                                <p class="uppercase text-sm font-semibold leading-tight text-gray-700">Transporte</p>
+                                <p class="text-xs leading-tight">
+                                    {% if tTour.tTransport %}{{tTour.tTransport}}
+                                    {% elif not tTour.tTransport %}N/A{% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex flex-row items-center">
+                            <i class="fa-solid fa-shower text-2xl"></i>
+                            <div class="flex flex-col px-1 m-1">
+                                <p class="uppercase text-sm font-semibold leading-tight text-gray-700">Alimentacion</p>
+                                <p class="text-xs leading-tight">
+                                    {% if tTour.tFood %}{{tTour.tFood}}
+                                    {% elif not tTour.tFood %}N/A{% endif %}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex flex-row items-center">
+                            <i class="fa-solid fa-tv text-2xl"></i>
+                            <div class="flex flex-col px-1 m-1">
+                                <p class="uppercase text-sm font-semibold leading-tight text-gray-700">GUIA</p>
+                                <p class="text-xs leading-tight">
+                                    {% if tTour.tGuie %}{{tTour.tGuie}}
+                                    {% elif not tTour.tGuie %}N/A{% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--######################################################################-->
+    <!--###########--><hr class="mt-10 mx-10 divider gradient"><!--###########-->
+    <!-- Footer/section ===================================================== -->
+    <footer>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 items-center bg-neutral-800 py-2 px-8">
+          <div class="flex flex-row">
+            <img src="{% static 'logo.webp' %}" class="h-16" />
+            <div class="flex flex-col justify-center">
+              <p class="text-gray-200 text-left ml-4">MyLifeTravel</p>
+              <p class="text-gray-400 text-left ml-4 text-xs">{{Settings.sEmail|default:"mail@mail.com"}}</p>
+            </div>
+          </div>
+          <div class="flex flex-row gap-4 items-center">
+            <div class="flex flex-col text-xs">
+              <p class="text-gray-200 uppercase">Contactanos</p>
+              <p class="text-gray-400">WhatsApp: {{Settings.sTel|default:"30000000000"}}</p>
+            </div>
+            <div>
+              <a target="_blank" href="https://wa.me/{{Settings.sIdx}}{{Settings.sTel}}" class="bg-gray-500 hover:bg-gray-600 text-gray-200 font-bold py-2 px-4 rounded-md text-xs max-w-fit">CHAT</a>
+            </div>
+          </div>
+          <div class="flex flex-row gap-4 whitespace-nowrap items-center">
+            <div class="flex flex-col text-xs">
+              <p class="text-gray-200 uppercase">Atencion</p>
+              <p class="text-gray-400 text-left text-xs">Lunes-Sabado {{Settings.sTime1|time:"g"|default:"0:00"}}-{{Settings.sTime2|time:"g"|default:"0:00"}}pm</p>
+            </div>
+            <div class="text-gray-400 text-left text-xs">
+              <p>Jornada Continua</p>
+              <p>{{Settings.sAddress|default:"Colombia"}}</p>
+            </div>
+          </div>
+          <div class="flex flex-row items-center space-x-2 justify-end">
+            <a href="{{Settings.sURL2}}" target="_blank"><p class="w-8 h-8 rounded-full bg-gray-200 hover:bg-facebook hover:text-white transition duration-300"><i class="p-2 fab fa-facebook"></i></p></a>
+            <a href="{{Settings.sURL1}}" target="_blank"><p class="w-8 h-8 rounded-full bg-gray-200 hover:bg-instagram hover:text-white transition duration-300"><i class="p-2 fab fa-instagram"></i></p></a>
+            <a href="{{Settings.sURL3}}" target="_blank"><p class="w-8 h-8 rounded-full bg-gray-200 hover:bg-twiter hover:text-white transition duration-300"><i class="p-2 fab fa-twitter"></i></p></a>
+          </div>
+        </div>
+    </footer>
+    <!--######################################################################-->
+    <!--######################################################################-->
+    <script type="text/javascript" src="{% static 'js/navbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/glider.js' %}"></script>
+</body>
+</html>
+

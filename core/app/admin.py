@@ -1,5 +1,3 @@
-from ckeditor.widgets import CKEditorWidget
-
 from django.contrib import admin
 from django.conf.locale.es import formats as es_formats
 from django.contrib.auth.admin import UserAdmin
@@ -101,8 +99,9 @@ class UserAuthAdmin(UserAdmin):
 
 
 class HotelsAdmin(admin.ModelAdmin):
-    
-    inlines = [HotelFilesInline,HotelBookingInline]
+
+    inlines = [HotelFilesInline]
+    #inlines = [HotelFilesInline,HotelBookingInline]
     
     
     list_display = (
@@ -155,7 +154,8 @@ class HotelsAdmin(admin.ModelAdmin):
 
 class ToursAdmin(admin.ModelAdmin):
 
-    inlines = [ToursFilesInline,ToursBookingInline]
+    inlines = [ToursFilesInline]
+    #inlines = [ToursFilesInline,ToursBookingInline]
 
     list_display = (
         "tCode",
@@ -175,6 +175,11 @@ class ToursAdmin(admin.ModelAdmin):
         ("tHotel","tTransport","tFood","tGuie","tPools","tEcological"),
         )}
 
+    fLocation = {"fields": (
+        "address",
+        "geolocation"
+        )}
+
     fText = {"fields": (
         "tText",
         "tTextX"
@@ -184,6 +189,7 @@ class ToursAdmin(admin.ModelAdmin):
     fieldsets = (
         ("Configuracion", fConfig),
         ("Caracteristicas", fInfo),
+        ("Localizacion", fLocation),
         ("Informacion", fText),
         )
 
@@ -191,9 +197,11 @@ class ToursAdmin(admin.ModelAdmin):
     search_fields = ['tTour']
 
     es_formats.DATETIME_FORMAT = "d M Y"
+
     formfield_overrides = {
-        models.TextField: {'widget': CKEditorWidget()},
+        map_fields.AddressField: {'widget': map_widgets.GoogleMapsAddressWidget},
     }
+
 
 class NewsAdmin(admin.ModelAdmin):
 
@@ -266,10 +274,6 @@ class InformationAdmin(admin.ModelAdmin):
     fieldsets = (
         ("Configuracion", fConfig),
         )
-
-    formfield_overrides = {
-        models.TextField: {'widget': CKEditorWidget()},
-    }
 
 class SettingsAdmin(admin.ModelAdmin):
 
