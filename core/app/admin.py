@@ -172,7 +172,7 @@ class ToursAdmin(admin.ModelAdmin):
         )}
 
     fInfo = {"fields": (
-        ("tHotel","tTransport","tFood","tGuie","tPools","tEcological"),
+        ("tHotel","tTransport","tFood","tGuie"),
         )}
 
     fLocation = {"fields": (
