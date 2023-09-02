@@ -90,13 +90,13 @@
                                 const ubicacion = "{{ hHotel.geolocation }}";
                                 const [lat, lng] = ubicacion.split(',').map(coord => parseFloat(coord));
                                 map = new google.maps.Map(document.getElementById("gMap"), {
-                                    center: { lat: lat, lng: lng }, 
+                                    center: { lat: lat, lng: lng },
                                     zoom: 10,
                                     mapTypeControl: false,
                                 });
                             }
-                            window.initMap = initMap;codigo
-                        </script>
+                            window.initMap = initMap;
+                        </script>                        
                     </div>
                 </div>
                 <div class="bg-gray-100 h-full w-full flex items-end">
