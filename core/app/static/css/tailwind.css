@@ -989,8 +989,8 @@ select {
   height: 90vh;
 }
 
-.min-h-\[576px\] {
-  min-height: 576px;
+.min-h-\[224px\] {
+  min-height: 224px;
 }
 
 .h-full {
